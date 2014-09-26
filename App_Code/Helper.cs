@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 
 using System.Security.Cryptography;
+using System.Data.SqlClient;
 
 public class Helper
 {
@@ -25,5 +26,20 @@ public class Helper
         Byte[] EncryptedBytes = HashTool.ComputeHash(PhraseAsByte);
         HashTool.Clear();
         return Convert.ToBase64String(EncryptedBytes);
+    }
+
+    public static void AddLog(string userID, string type, string desc)
+    {
+        SqlConnection con = new SqlConnection(GetCon());
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "INSERT INTO AuditTbl VALUES (@UID, @LogType, @Description, @LogDate)";
+        cmd.Parameters.AddWithValue("@UID", userID);
+        cmd.Parameters.AddWithValue("@LogType", type);
+        cmd.Parameters.AddWithValue("@Description", desc);
+        cmd.Parameters.AddWithValue("@LogDate", DateTime.Now);
+        cmd.ExecuteNonQuery();
+        con.Close();
     }
 }

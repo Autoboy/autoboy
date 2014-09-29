@@ -42,6 +42,7 @@ public partial class Paint_Add : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
         cmd.CommandText = "INSERT INTO PaintTbl VALUES (@Color, @SupplierID)";
+        
         cmd.Parameters.AddWithValue("@Color", txtColor.Text);
         cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
         

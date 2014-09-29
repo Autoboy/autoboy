@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Data.SqlClient;
 
-public partial class Car_Delete : System.Web.UI.Page
+public partial class Suppliers_Delete : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -15,12 +15,12 @@ public partial class Car_Delete : System.Web.UI.Page
     {
         if (Request.QueryString["ID"] != null)
         {
-            String ChassisNo = "";
-            bool validCar = Request.QueryString["ID"], out ChassisNo;
+            int SupplierID = 0;
+            bool ValidSupplier = int.TryParse(Request.QueryString["ID"].ToString(), out SupplierID);
 
-            if (validCar)
+            if (ValidSupplier)
             {
-                DeleteRecord(ChassisNo);
+                DeleteRecord(SupplierID);
             }
             else
                 Response.Redirect("Default.aspx");
@@ -34,8 +34,8 @@ public partial class Car_Delete : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "DELETE FROM CarTbl WHERE ChassisNo=@ChassisNo";
-        cmd.Parameters.AddWithValue("@ChassisNo", ID);
+        cmd.CommandText = "DELETE FROM SupplierTbl WHERE SupplierID=@SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ID);
         cmd.ExecuteNonQuery();
         con.Close();
         Session["delete"] = "yes";

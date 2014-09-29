@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Accounts_Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Suppliers_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    View Accounts
+    View Suppliers
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -44,28 +44,25 @@
             <table class="table table-hover">
                 <thead>
                     <th>#</th>
-                    <th>User Type</th>
-                    <th>Email</th>
-                    <th>User</th>
+                    <th>Supplier</th>
                     <th>Address</th>
-                    <th>Mobile</th>
-                    <th>Status</th>
+                    <th>Email Address</th>
+                    <th>Mobile Number</th>
+                    
                     <th></th>
                 </thead>
                 <tbody>
-                    <asp:ListView ID="lvUsers" runat="server">
+                    <asp:ListView ID="lvSuppliers" runat="server">
                         <ItemTemplate>
                             <tr>
-                                <td><%# Eval("UID") %></td>
-                                <td><%# Eval("UserType") %></td>
+                                <td><%# Eval("SupplierID") %></td>
+                                <td><%# Eval("Supplier") %></td>
+                                <td><%# Eval("Street") %> <%# Eval("Municipality") %>, <%# Eval("City") %></td>
                                 <td><%# Eval("EmailAddress") %></td>
-                                <td><%# Eval("LastName") %>, <%# Eval("FirstName") %></td>
-                                <td><%# Eval("Street") %> <%# Eval("Address") %>, <%# Eval("City") %></td>
                                 <td><%# Eval("MobileNo") %></td>
-                                <td><%# Eval("Status") %></td>
                                 <td>
-                                    <a href='Details.aspx?ID=<%# Eval("UID") %>'><i class="fa fa-search"></i></a>&nbsp;
-                                    <a href='Delete.aspx?ID=<%# Eval("UID") %>' onclick='return confirm("Delete record?")'>
+                                    <a href='Details.aspx?ID=<%# Eval("SupplierID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    <a href='Delete.aspx?ID=<%# Eval("SupplierID") %>' onclick='return confirm("Delete record?")'>
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>

@@ -28,13 +28,27 @@
                             <li><a href="~/Accounts/Add.aspx" runat="server">Add an Account</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" id="Cars" href="#">Cars <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/Car" runat="server">View Cars</a></li>
+                            <li><a href="~/Car/Add.aspx" runat="server">Add a Car</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" id="accounts" href="#">Accounts <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" id="PartModel" href="#">Parts & Model <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="~/Accounts" runat="server">View Accounts</a></li>
-                            <li><a href="~/Accounts/Add.aspx" runat="server">Add an Account</a></li>
+                            <li><a href="~/" runat="server">View Suppliers</a></li>
+                            <li><a href="~/Suppliers/Add.aspx" runat="server">Add a Supplier</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" id="specifications" href="#">Specific Parts <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="~/Specifications" runat="server">View Specific Parts</a></li>
+                            <li><a href="~/Specifications/Add.aspx" runat="server">Add a Specific Part</a></li>
                         </ul>
                     </li>
                 </ul>

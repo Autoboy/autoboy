@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class Paint_Default : System.Web.UI.Page
+public partial class Specifications_Default : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -38,22 +38,24 @@ public partial class Paint_Default : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            GetColors();
+            GetSpecific();
         }
     }
 
-    void GetColors()
+    void GetSpecific()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT PaintTbl.PaintID, PaintTbl.Color, SupplierTbl.Supplier FROM PaintTbl " +
-            "INNER JOIN SupplierTbl ON PaintTbl.SupplierID = SupplierTbl.SupplierID";
+        cmd.CommandText = "SELECT SpecificTbl.SpecificID, PartTbl.PartName, ModelTbl.ModelName, SpecificTbl.[Year], " +
+        "SpecificTbl.EstPrice, SpecificTbl.EstTime FROM SpecificTbl " +
+        "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
+        "INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID";
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
-        da.Fill(ds, "PaintTbl");
-        lvUsers.DataSource = ds;
-        lvUsers.DataBind();
+        da.Fill(ds, "SpecificTbl");
+        lvSpecific.DataSource = ds;
+        lvSpecific.DataBind();
         con.Close();
     }
 
@@ -104,7 +106,7 @@ public partial class Paint_Default : System.Web.UI.Page
 
     //protected void ddlTypes_SelectedIndexChanged(object sender, EventArgs e)
     //{
-    //    //txtSearch.Text = string.Empty;
+    //    txtSearch.Text = string.Empty;
 
     //    if (ddlTypes.SelectedIndex == 0)
     //    {

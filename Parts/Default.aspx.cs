@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class Accounts_Default : System.Web.UI.Page
+public partial class Parts_Default : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 

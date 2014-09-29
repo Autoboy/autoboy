@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
-        <div class="col-lg-6">
+        <div class="col-lg-9">
             <div class="form-group">
                 <label class="control-label col-lg-4">User Type</label>
                 <div class="col-lg-8">

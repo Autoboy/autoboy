@@ -1,11 +1,21 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="Accounts_Add" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Details.aspx.cs" Inherits="Accounts_Details" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Add an Account
+    View Account #<asp:Literal ID="ltID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
         <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-lg-4">Status</label>
+                <div class="col-lg-8">
+                    <asp:DropDownList ID="ddlStatus" runat="server" class="form-control">
+                        <asp:ListItem>Active</asp:ListItem>
+                        <asp:ListItem>Inactive</asp:ListItem>
+                        <asp:ListItem>Blocked</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">User Type</label>
                 <div class="col-lg-8">
@@ -21,7 +31,7 @@
             <div class="form-group">
                 <label class="control-label col-lg-4">Password</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtPassword" runat="server" class="form-control" TextMode="Password" MaxLength="20" required />
+                    <asp:TextBox ID="txtPassword" runat="server" class="form-control" TextMode="Password" MaxLength="20" />
                 </div>
             </div>
             <div class="form-group">
@@ -67,7 +77,7 @@
             <span class="pull-right">
                 <asp:Button ID="btnCancel" runat="server" class="btn btn-default" Text="Cancel" 
                     PostBackUrl="~/Accounts/Default.aspx" formnovalidate />
-                <asp:Button ID="btnAdd" runat="server" class="btn btn-success" Text="Add" OnClick="btnAdd_Click" />
+                <asp:Button ID="btnUpdate" runat="server" class="btn btn-success" Text="Update" OnClick="btnUpdate_Click" />
             </span>
         </div>
     </form>

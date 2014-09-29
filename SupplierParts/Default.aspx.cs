@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class Accounts_Default : System.Web.UI.Page
+public partial class SupplierParts_Default : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -47,19 +47,19 @@ public partial class Accounts_Default : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT AccountTbl.UID, UserTypeTbl.UserType, AccountTbl.EmailAddress, " +
-            "AccountTbl.FirstName, AccountTbl.LastName, AccountTbl.Street, AccountTbl.Address, AccountTbl.City, " +
-            "AccountTbl.MobileNo, AccountTbl.Status FROM AccountTbl " +
-            "INNER JOIN UserTypeTbl ON AccountTbl.TypeID = UserTypeTbl.TypeID";
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID, SupplierTbl.Supplier, PartTbl.PartName, PartTbl.Description " +
+            "From SupplierTbl " +
+            "INNER JOIN SupplierPartsTbl ON SupplierPartsTbl.SupplierID = SupplierTbl.SupplierID " +
+            "INNER JOIN PartTbl ON SupplierPartsTbl.PartsID = PartTbl.PartID";
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
-        da.Fill(ds, "AccountTbl");
+        da.Fill(ds, "SupplierPartsTbl");
         lvUsers.DataSource = ds;
         lvUsers.DataBind();
         con.Close();
     }
 
-    void GetAccounts(string keyword)
+    /*void GetAccounts(string keyword)
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
@@ -129,5 +129,5 @@ public partial class Accounts_Default : System.Web.UI.Page
     protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
     {
         GetAccountsByStatus();
-    }
+    }*/
 }

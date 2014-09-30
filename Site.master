@@ -40,8 +40,8 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" id="PartModel" href="#">Parts & Model <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="~/" runat="server">View Suppliers</a></li>
-                            <li><a href="~/Suppliers/Add.aspx" runat="server">Add a Supplier</a></li>
+                            <li><a href="~/Parts" runat="server">View Parts & Models</a></li>
+                            <li><a href="~/Parts/Add.aspx" runat="server">Add a Part & Model</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

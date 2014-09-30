@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Accounts_Default" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Parts_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    View Accounts
+    View Parts & Model
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -15,7 +15,7 @@
             <div id="delete" runat="server" class="alert alert-success" visible="false">
                 Record deleted.
             </div>
-            <div class="col-lg-4">
+            <%--<div class="col-lg-4">
                 <div class="input-group">
                     <span class="input-group-addon">Search By:</span>
                     <asp:DropDownList ID="ddlTypes" runat="server" class="form-control"
@@ -39,33 +39,56 @@
                     <asp:ListItem>Inactive</asp:ListItem>
                     <asp:ListItem>Blocked</asp:ListItem>
                 </asp:DropDownList>
-            </div>
-            <br /><br />
+            </div>--%>
+            <%--<br /><br />--%>
+            
             <table class="table table-hover">
+                <h2>Parts</h2>
                 <thead>
                     <th>#</th>
-                    <th>User Type</th>
-                    <th>Email</th>
-                    <th>User</th>
-                    <th>Address</th>
-                    <th>Mobile</th>
-                    <th>Status</th>
+                    <th>Part Name</th>
+                    <th>Description</th>
                     <th></th>
                 </thead>
                 <tbody>
-                    <asp:ListView ID="lvUsers" runat="server">
+                    <asp:ListView ID="lvParts" runat="server">
                         <ItemTemplate>
                             <tr>
-                                <td><%# Eval("UID") %></td>
-                                <td><%# Eval("UserType") %></td>
-                                <td><%# Eval("EmailAddress") %></td>
-                                <td><%# Eval("LastName") %>, <%# Eval("FirstName") %></td>
-                                <td><%# Eval("Street") %> <%# Eval("Address") %>, <%# Eval("City") %></td>
-                                <td><%# Eval("MobileNo") %></td>
-                                <td><%# Eval("Status") %></td>
+                                <td><%# Eval("PartID") %></td>
+                                <td><%# Eval("PartName") %></td>
+                                <td><%# Eval("Description") %></td>
                                 <td>
-                                    <a href='Details.aspx?ID=<%# Eval("UID") %>'><i class="fa fa-search"></i></a>&nbsp;
-                                    <a href='Delete.aspx?ID=<%# Eval("UID") %>' onclick='return confirm("Delete record?")'>
+                                    <a href='Details.aspx?ID=<%# Eval("PartID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    <a href='Delete.aspx?ID=<%# Eval("PartID") %>' onclick='return confirm("Delete record?")'>
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <EmptyDataTemplate>
+                            <tr>
+                                <td colspan="8"><h2 class="text-center">No records found.</h2></td>
+                            </tr>
+                        </EmptyDataTemplate>
+                    </asp:ListView>
+
+                    
+            <table class="table table-hover">
+                
+                <h2>Model</h2><thead>
+                    <th>#</th>
+                    <th>Model Name</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <asp:ListView ID="lvModels" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("ModelID") %></td>
+                                <td><%# Eval("ModelName") %></td>
+                                <td>
+                                    <a href='Details.aspx?ID1=<%# Eval("ModelID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    <a href='Delete.aspx?ID1=<%# Eval("ModelID") %>' onclick='return confirm("Delete record?")'>
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>

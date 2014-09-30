@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Data.SqlClient;
 
-public partial class Accounts_Delete : System.Web.UI.Page
+public partial class Parts_Delete : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -15,12 +15,12 @@ public partial class Accounts_Delete : System.Web.UI.Page
     {
         if (Request.QueryString["ID"] != null)
         {
-            int userID = 0;
-            bool validProduct = int.TryParse(Request.QueryString["ID"].ToString(), out userID);
+            int PartID = 0;
+            bool validProduct = int.TryParse(Request.QueryString["ID"].ToString(), out PartID);
 
             if (validProduct)
             {
-                DeleteRecord(userID);
+                DeleteRecord(PartID);
             }
             else
                 Response.Redirect("Default.aspx");
@@ -34,8 +34,21 @@ public partial class Accounts_Delete : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "DELETE FROM AccountTbl WHERE UID=@UID";
-        cmd.Parameters.AddWithValue("@UID", ID);
+        cmd.CommandText = "DELETE FROM PartTbl WHERE PartID=@PartID";
+        cmd.Parameters.AddWithValue("@PartID", ID);
+        cmd.ExecuteNonQuery();
+        con.Close();
+        Session["delete"] = "yes";
+        Response.Redirect("Default.aspx");
+    }
+
+    void DeleteModel(int ID)
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "DELETE FROM PartTbl WHERE PartID=@PartID";
+        cmd.Parameters.AddWithValue("@PartID", ID);
         cmd.ExecuteNonQuery();
         con.Close();
         Session["delete"] = "yes";

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Details.aspx.cs" Inherits="Car_Details" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Details.aspx.cs" Inherits="Query_Details" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
     View Account #<asp:Literal ID="ltID" runat="server" />
@@ -17,68 +17,71 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">User Type</label>
+                <label class="control-label col-lg-4">#</label>
                 <div class="col-lg-8">
-                    <asp:DropDownList ID="ddlTypes" runat="server" class="form-control" />
+                    <asp:Label ID="lblID" runat="server" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">Email</label>
+                <label class="control-label col-lg-4">Subject</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtEmail" runat="server" class="form-control" type="email" MaxLength="80" required />
+                    <asp:Label ID="lblSubject" runat="server" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">Password</label>
+                <label class="control-label col-lg-4">Description</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtPassword" runat="server" class="form-control" TextMode="Password" MaxLength="20" />
+                    <asp:Label ID="lblQuery" runat="server" />
+                </div>
+            </div>
+            <div id="Pic1" runat="server" class="form-group">
+                <label class="control-label col-lg-4">Photo 1</label>
+                <div class="col-lg-8">
+                    <asp:Button ID="btnPic1" runat="server" class="btn btn-info" Text="View" />
+                </div>
+            </div>
+            <div id="Pic2" runat="server" class="form-group">
+                <label class="control-label col-lg-4">Photo 2</label>
+                <div class="col-lg-8">
+                    <asp:Button ID="btnPic2" runat="server" class="btn btn-info" Text="View" />
+                </div>
+            </div>
+            <div id="Pic3" runat="server" class="form-group">
+                <label class="control-label col-lg-4">Photo 3</label>
+                <div class="col-lg-8">
+                    <asp:Button ID="btnPic3" runat="server" class="btn btn-info" Text="View" />
+                </div>
+            </div>
+            <div id="Doc" runat="server" class="form-group">
+                <label class="control-label col-lg-4">Document</label>
+                <div class="col-lg-8">
+                    <asp:Button ID="btnDoc" runat="server" class="btn btn-info" Text="View" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">First Name</label>
+                <label class="control-label col-lg-4">Date Submitted</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtFN" runat="server" class="form-control" MaxLength="80" required />
+                    <asp:Label ID="lblQueryDate" runat="server" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">Last Name</label>
+                <label class="control-label col-lg-4">Date Read</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtLN" runat="server" class="form-control" MaxLength="50" required />
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label class="control-label col-lg-4">Street</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtStreet" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:Label ID="lblQueryReadDate" runat="server" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">Municipality</label>
+                <label class="control-label col-lg-4">Email Address</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtAddress" runat="server" class="form-control" MaxLength="100" required />
+                    <asp:Label ID="lblEmail" runat="server" />
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-lg-4">City</label>
+                <label class="control-label col-lg-4">Status</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtCity" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:Label ID="lblStatus" runat="server" />
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-lg-4">Mobile</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtMobile" runat="server" class="form-control" MaxLength="12" />
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <span class="pull-right">
-                <asp:Button ID="btnCancel" runat="server" class="btn btn-default" Text="Cancel" 
-                    PostBackUrl="~/Accounts/Default.aspx" formnovalidate />
-                <asp:Button ID="btnUpdate" runat="server" class="btn btn-success" Text="Update" OnClick="btnUpdate_Click" />
-            </span>
         </div>
     </form>
 </asp:Content>

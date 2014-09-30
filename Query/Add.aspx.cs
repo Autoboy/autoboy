@@ -57,13 +57,51 @@ public partial class Query_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO QueryTbl VALUES (@Subject, @QueryDate, @EmailAddress, " +
-            "@Query)";
+        cmd.CommandText = "INSERT INTO QueryTbl VALUES (@Subject, @Query, @Pic1, " +
+            "@Pic2, @Pic3, @Docs, @QueryDate, @QueryReadDate, @EmailAddress, @Status)";
         
-        cmd.Parameters.AddWithValue("@Subjecy", txtSubject.Text);
-        cmd.Parameters.AddWithValue("@PlateNo", txtDate.Text);
-        cmd.Parameters.AddWithValue("@ModelID", txtEmail.Text);
-        cmd.Parameters.AddWithValue("@Year", txtDescription.Text);
+        cmd.Parameters.AddWithValue("@Subject", txtSubject.Text);
+        cmd.Parameters.AddWithValue("@QueryDate", DateTime.Now);
+        cmd.Parameters.AddWithValue("@EmailAddress", txtEmail.Text);
+        cmd.Parameters.AddWithValue("@Query", txtDescription.Text);
+        if (fuPic1.HasFile)
+        {
+            cmd.Parameters.AddWithValue("@Pic1", DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuPic1.FileName);
+            fuPic1.SaveAs(Server.MapPath("~/Images/" + DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuPic1.FileName));
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Pic1", String.Empty);
+        }
+        if (fuPic2.HasFile)
+        {
+            cmd.Parameters.AddWithValue("@Pic2", DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuPic2.FileName);
+            fuPic2.SaveAs(Server.MapPath("~/Images/" + DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuPic2.FileName));
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Pic2", String.Empty);
+        }
+        if (fuPic3.HasFile)
+        {
+            cmd.Parameters.AddWithValue("@Pic3", DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuPic3.FileName);
+            fuPic3.SaveAs(Server.MapPath("~/Images/" + DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuPic3.FileName));
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Pic3", String.Empty);
+        }
+        if (fuDoc1.HasFile)
+        {
+            cmd.Parameters.AddWithValue("@Docs", DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuDoc1.FileName);
+            fuDoc1.SaveAs(Server.MapPath("~/Images/" + DateTime.Now.ToString("yyyyMMddHHmm") + "-" + fuDoc1.FileName));
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Docs", String.Empty);
+        }
+        cmd.Parameters.AddWithValue("@Status", "Pending");
+        cmd.Parameters.AddWithValue("@QueryReadDate", DBNull.Value);
         cmd.ExecuteNonQuery();
         con.Close();
         Session["add"] = "yes";

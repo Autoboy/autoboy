@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class Car_Default : System.Web.UI.Page
+public partial class Query_Default : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -38,24 +38,21 @@ public partial class Car_Default : System.Web.UI.Page
 
         if (!IsPostBack)
         {
-            GetCars();
+            GetQuery();
         }
     }
 
-    void GetCars()
+    void GetQuery()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT CarTbl.ChassisNo, CarTbl.PlateNo, ModelTbl.ModelName, " +
-        "CarTbl.[Year], AccountTbl.FirstName, AccountTbl.LastName, CarTbl.Status FROM CarTbl " +
-        "INNER JOIN AccountTbl ON CarTbl.UID = AccountTbl.UID " +
-        "INNER JOIN ModelTbl ON CarTbl.ModelID = ModelTbl.ModelID";
+        cmd.CommandText = "SELECT QueryID, Subject, QueryDate, EmailAddress, Status FROM QueryTbl ORDER BY QueryDate";
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
-        da.Fill(ds, "CarTbl");
-        lvCars.DataSource = ds;
-        lvCars.DataBind();
+        da.Fill(ds, "QueryTbl");
+        lvQuery.DataSource = ds;
+        lvQuery.DataBind();
         con.Close();
     }
     //
@@ -130,4 +127,20 @@ public partial class Car_Default : System.Web.UI.Page
     //{
     //    GetAccountsByStatus();
     //}
+    protected void ddlTypes_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+    protected void txtSearch_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+    protected void ddlStatus_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
+    }
+    protected void ddlStatus_SelectedIndexChanged1(object sender, EventArgs e)
+    {
+
+    }
 }

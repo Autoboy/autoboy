@@ -18,11 +18,24 @@ public partial class Parts_Add : System.Web.UI.Page
         {
             GetModels();
             GetSpecs();
+            GetParts();
 
         }
     }
 
-    
+    void GetParts()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT PartID, PartName FROM PartTbl";
+        SqlDataReader data = cmd.ExecuteReader();
+        ddlPartName.DataSource = data;
+        ddlPartName.DataTextField = "PartName";
+        ddlPartName.DataValueField = "PartID";
+        ddlPartName.DataBind();
+        con.Close();
+    }
 
     void GetModels()
     {
@@ -46,6 +59,7 @@ public partial class Parts_Add : System.Web.UI.Page
         cmd.Connection = con;
         cmd.CommandText = "SELECT SpecificTbl.SpecificID, ModelTbl.ModelName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
             "FROM SpecificTbl INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID " +
+            "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
             "WHERE SpecificTbl.PartID = 0";
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
@@ -64,7 +78,7 @@ public partial class Parts_Add : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
         cmd.CommandText = "INSERT INTO SpecificTbl VALUES (@PartID, @ModelID, @Year, @EstPrice, @EstTime)";
-        cmd.Parameters.AddWithValue("@PartID", 0);
+        cmd.Parameters.AddWithValue("@PartID", ddlPartName.SelectedValue);
         cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
         cmd.Parameters.AddWithValue("@Year", txtYear.Text);
         cmd.Parameters.AddWithValue("@EstPrice", txtPrice.Text);
@@ -94,10 +108,10 @@ public partial class Parts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO PartTbl VALUES (@PartName, @Description); " +
-            "SELECT TOP 1 PartID FROM PartTbl ORDER BY PartID DESC;";
-        cmd.Parameters.AddWithValue("@PartName", txtName.Text);
-        cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
+        //cmd.CommandText = "INSERT INTO PartTbl VALUES (@PartName, @Description); " +
+        //    "SELECT TOP 1 PartID FROM PartTbl ORDER BY PartID DESC;";
+        //cmd.Parameters.AddWithValue("@PartName", txtName.Text);
+        //cmd.Parameters.AddWithValue("@Description", txtDescription.Text);
 
         int partID = (int)cmd.ExecuteScalar();
         cmd.CommandText = "UPDATE SpecificTbl SET PartID=@PartID WHERE PartID=0";

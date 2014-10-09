@@ -29,7 +29,10 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="control-label col-lg-4">Model Name</label>

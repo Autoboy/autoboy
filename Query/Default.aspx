@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Query_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    View Accounts
+    View Inquiries
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -61,8 +61,6 @@
                                 <td><%# Eval("Status") %></td>
                                 <td>
                                     <a href='Details.aspx?ID=<%# Eval("QueryID") %>'><i class="fa fa-search"></i></a>&nbsp;
-                                    <a href='Delete.aspx?ID=<%# Eval("QueryID") %>' onclick='return confirm("Delete record?")'>
-                                        <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>
                             </tr>

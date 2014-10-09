@@ -9,15 +9,9 @@
             <div class="form-group">
                 <label class="control-label col-lg-4">Subject</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtSubject" runat="server" class="form-control" MaxLength="80" required />
+                    <asp:TextBox ID="txtSubject" runat="server" AutoComplete="Off" class="form-control" MaxLength="80" required />
                 </div>
             </div>
-            <!--<div class="form-group">
-                <label class="control-label col-lg-4">Date</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtDate" runat="server" class="form-control" Type="date"  MaxLength="7" required />
-                </div>
-            </div>-->
             <div class="form-group">
                 <label class="control-label col-lg-4">Email Address</label>
                 <div class="col-lg-8">
@@ -27,7 +21,7 @@
             <div class="form-group">
                 <label class="control-label col-lg-4">Description</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" class="form-control" />
+                    <asp:TextBox ID="txtDescription" runat="server" AutoComplete="Off" TextMode="MultiLine" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
@@ -44,18 +38,6 @@
                     <asp:FileUpload ID="fuDoc1" runat="server" class="form-control" />
                 </div>
             </div>
-            <!--<div class="form-group">
-                <label class="control-label col-lg-4">Year</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtYear" runat="server" class="form-control" MaxLength="4" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-4">User Account</label>
-                <div class="col-lg-8">
-                    <asp:DropDownList ID="ddlAccount" runat="server" class="form-control" />
-                </div>
-            </div>-->   
         </div>
         <div class="col-lg-12">
             <span class="pull-right">

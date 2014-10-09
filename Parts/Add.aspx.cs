@@ -22,20 +22,6 @@ public partial class Parts_Add : System.Web.UI.Page
         }
     }
 
-    //void GetUserTypes()
-    //{
-    //    con.Open();
-    //    SqlCommand cmd = new SqlCommand();
-    //    cmd.Connection = con;
-    //    cmd.CommandText = "SELECT TypeID, UserType FROM UserTypeTbl";
-    //    SqlDataReader dr = cmd.ExecuteReader();
-    //    ddlTypes.DataSource = dr;
-    //    ddlTypes.DataTextField = "UserType";
-    //    ddlTypes.DataValueField = "TypeID";
-    //    ddlTypes.DataBind();
-    //    con.Close();
-    //}
-
     protected void btnAdd_Click(object sender, EventArgs e)
     {
         con.Open();

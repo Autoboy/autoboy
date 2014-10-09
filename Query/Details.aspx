@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Details.aspx.cs" Inherits="Query_Details" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    View Account #<asp:Literal ID="ltID" runat="server" />
+    View Inquiries<asp:Literal ID="ltID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -10,8 +10,8 @@
                 <label class="control-label col-lg-4">Status</label>
                 <div class="col-lg-8">
                     <asp:DropDownList ID="ddlStatus" runat="server" class="form-control">
-                        <asp:ListItem>Active</asp:ListItem>
-                        <asp:ListItem>Inactive</asp:ListItem>
+                        <asp:ListItem>Read</asp:ListItem>
+                        <asp:ListItem>Unread</asp:ListItem>
                         <asp:ListItem>Blocked</asp:ListItem>
                     </asp:DropDownList>
                 </div>
@@ -37,19 +37,19 @@
             <div id="Pic1" runat="server" class="form-group">
                 <label class="control-label col-lg-4">Photo 1</label>
                 <div class="col-lg-8">
-                    <asp:Button ID="btnPic1" runat="server" class="btn btn-info" Text="View" />
+                    <asp:HyperLink ID="hlkPic1" runat="server" Target="_blank" class="btn btn-info" Text="View" />
                 </div>
             </div>
             <div id="Pic2" runat="server" class="form-group">
                 <label class="control-label col-lg-4">Photo 2</label>
                 <div class="col-lg-8">
-                    <asp:Button ID="btnPic2" runat="server" class="btn btn-info" Text="View" />
+                    <asp:HyperLink ID="hlkPic2" runat="server" Target="_blank" class="btn btn-info" Text="View" />
                 </div>
             </div>
             <div id="Pic3" runat="server" class="form-group">
                 <label class="control-label col-lg-4">Photo 3</label>
                 <div class="col-lg-8">
-                    <asp:Button ID="btnPic3" runat="server" class="btn btn-info" Text="View" />
+                    <asp:HyperLink ID="hlkPic3" runat="server" Target="_blank" class="btn btn-info" Text="View" />
                 </div>
             </div>
             <div id="Doc" runat="server" class="form-group">

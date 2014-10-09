@@ -63,9 +63,9 @@ public partial class Query_Details : System.Web.UI.Page
                 lblID.Text = dr["QueryID"].ToString();
                 lblSubject.Text = dr["Subject"].ToString();
                 lblQuery.Text = dr["Query"].ToString();
-                btnPic1.PostBackUrl = "~/Images/" + dr["Pic1"].ToString();
-                btnPic2.PostBackUrl = "~/Images/" + dr["Pic2"].ToString();
-                btnPic3.PostBackUrl = "~/Images/" + dr["Pic3"].ToString();
+                hlkPic1.NavigateUrl = "~/Images/" + dr["Pic1"].ToString();
+                hlkPic2.NavigateUrl = "~/Images/" + dr["Pic2"].ToString();
+                hlkPic3.NavigateUrl = "~/Images/" + dr["Pic3"].ToString();
                 btnDoc.PostBackUrl = "~/Images/" + dr["Docs"].ToString();
                 lblQueryDate.Text = dr["QueryDate"].ToString();
                 lblQueryReadDate.Text = dr["QueryReadDate"].ToString();

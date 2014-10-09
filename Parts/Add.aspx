@@ -28,7 +28,7 @@
             </span>
             </div>
         </div>
-        <div class="col-lg-offset-5 col-lg-8">
+        <div class="col-lg-6">
             <div class="form-group">
                 <label class="control-label col-lg-4">Model Name</label>
                 <div class="col-lg-8">

@@ -16,46 +16,183 @@ public partial class SupplierParts_Add : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            GetModels();
             GetSuppliers();
-            //txtEmail.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            GetSpecs();
+            GetSupplierPart2();
 
         }
     }
 
+    
     void GetSuppliers()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT SupplierID, Supplier FROM SupplierTbl";
-        SqlDataReader dr = cmd.ExecuteReader();
-        ddlTypes.DataSource = dr;
-        ddlTypes.DataTextField = "Supplier";
-        ddlTypes.DataValueField = "SupplierID";
-        ddlTypes.DataBind();
+        cmd.CommandText = "Select SupplierID, Supplier FROM SupplierTbl";
+        SqlDataReader data = cmd.ExecuteReader();
+        ddlSupplier.DataSource = data;
+        ddlSupplier.DataTextField = "Supplier";
+        ddlSupplier.DataValueField = "SupplierID";
+        ddlSupplier.DataBind();
         con.Close();
-    }
 
-    protected void btnAdd_Click(object sender, EventArgs e)
+    }
+    void GetModels()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO AccountTbl VALUES (@EmailAddress, @Password, @TypeID, " +
-            "@FirstName, @LastName, @MobileNo, @Street, @Address, @City, @Status)";
-        cmd.Parameters.AddWithValue("@TypeID", ddlTypes.SelectedValue);
-        cmd.Parameters.AddWithValue("@EmailAddress", txtEmail.Text);
-        cmd.Parameters.AddWithValue("@Password", Helper.CreateSHAHash(txtPassword.Text));
-        cmd.Parameters.AddWithValue("@FirstName", txtFN.Text);
-        cmd.Parameters.AddWithValue("@LastName", txtLN.Text);
-        cmd.Parameters.AddWithValue("@MobileNo", txtMobile.Text);
-        cmd.Parameters.AddWithValue("@Street", txtStreet.Text);
-        cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
-        cmd.Parameters.AddWithValue("@City", txtCity.Text);
-        cmd.Parameters.AddWithValue("@Status", "Active");
-        cmd.ExecuteNonQuery();
+        cmd.CommandText = "SELECT ModelID, ModelName FROM ModelTbl";
+        SqlDataReader data = cmd.ExecuteReader();
+        ddlModels.DataSource = data;
+        ddlModels.DataTextField = "ModelName";
+        ddlModels.DataValueField = "ModelID";
+        ddlModels.DataBind();
         con.Close();
-        Session["add"] = "yes";
-        Response.Redirect("Default.aspx");
+
+    }
+
+    void GetSpecs()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
+                            "FROM SpecificTbl INNER JOIN PartTbl " +
+                            "ON SpecificTbl.PartID = PartTbl.PartID " +
+                            "WHERE SpecificTbl.ModelID = @ModelID";
+        cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSpecView.DataSource = data;
+        lvSpecView.DataBind();
+        con.Close();
+    }
+
+    void GetSupplierPart()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
+                          "FROM SpecificTbl INNER JOIN PartTbl " +
+                          "ON SpecificTbl.PartID = PartTbl.PartID " +
+                          "INNER JOIN SupplierPartsTbl " +
+                          "ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
+                          "WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSupplierPart.DataSource = data;
+        lvSupplierPart.DataBind();
+        con.Close();
+
+
+    }
+
+    void GetSupplierPart2()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " + 
+                          "FROM SupplierPartsTbl INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " + 
+                          "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSupplierPart.DataSource = data;
+        lvSupplierPart.DataBind();
+        con.Close();
+
+
+    }
+
+    protected void btnAddLink_Click(object sender, EventArgs e)
+    {
+
+        
+    }
+
+    bool IsExisting(string partID)
+    {
+        bool existing = true;
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID FROM SupplierPartsTbl " +
+            "INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
+            "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
+            "WHERE SupplierPartsTbl.SupplierID = @SupplierID AND PartTbl.PartID=@PartID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+        cmd.Parameters.AddWithValue("@PartID", partID);
+        SqlDataReader data = cmd.ExecuteReader();
+        if (data.HasRows)
+            existing = true;
+        else
+            existing = false;
+        con.Close();
+        return existing;
+    }
+
+    protected void lvSpecView_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addLink")
+        {
+            Literal ltSpecificID = (Literal)e.Item.FindControl("ltSpecificID");
+            Literal ltPartID = (Literal)e.Item.FindControl("ltPartID");
+
+            bool existing = IsExisting(ltPartID.Text);
+
+            if (existing)
+                error.Visible = true;
+            else
+            {
+                error.Visible = false;
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "INSERT INTO SupplierPartsTbl VALUES (@SupplierID, @SpecificID)";
+                cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+                cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+        }
+        GetSpecs();
+        GetSupplierPart2();
+    }
+
+    protected void lvSpecs_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        
+    }
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+       
+    }
+    protected void ddlModels_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GetSpecs();
+    }
+
+    protected void lvSupplierPart_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "deleteitem")
+        {
+            Literal ltRefID = (Literal)e.Item.FindControl("ltRefID");
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = "DELETE FROM SupplierPartsTbl WHERE RefID=@RefID";
+            cmd.Parameters.AddWithValue("@RefID", ltRefID.Text);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        GetSupplierPart2();
+        
     }
 }

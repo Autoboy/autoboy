@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="Parts_Add" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Add an Account
+    Add Specific Part
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -10,13 +10,7 @@
             <div class="form-group">
                     <label class="control-label col-lg-3">Part Name</label>
                     <div class="col-lg-9">
-                        <asp:TextBox ID="txtName" runat="server" CssClass="form-control"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-3">Description</label>
-                    <div class="col-lg-9">
-                        <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" CssClass="form-control"/>
+                        <asp:DropDownList ID="ddlPartName" runat="server" CssClass="form-control"/>
                     </div>
                 </div>
             <div class="form-group">

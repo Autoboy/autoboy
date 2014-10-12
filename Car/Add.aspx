@@ -41,7 +41,7 @@
         <div class="col-lg-12">
             <span class="pull-right">
                 <asp:Button ID="btnCancel" runat="server" class="btn btn-default" Text="Cancel" 
-                    PostBackUrl="~/Accounts/Default.aspx" formnovalidate />
+                    PostBackUrl="~/Car/Default.aspx" formnovalidate />
                 <asp:Button ID="btnAdd" runat="server" class="btn btn-success" Text="Add" OnClick="btnAdd_Click" />
             </span>
         </div>

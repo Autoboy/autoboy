@@ -71,6 +71,35 @@ public partial class Parts_Default : System.Web.UI.Page
         con.Close();
     }
 
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "INSERT INTO ModelTbl VALUES (@ModelName)";
+        cmd.Parameters.AddWithValue("@ModelName", txtModel.Text);
+
+        cmd.ExecuteNonQuery();
+        con.Close();
+        Session["add"] = "yes";
+        Response.Redirect("Default.aspx");
+    }
+
+    protected void btnAdd1_Click(object sender, EventArgs e)
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "INSERT INTO PartTbl VALUES (@PartName, @Description)";
+        cmd.Parameters.AddWithValue("@PartName", txtPart.Text);
+        cmd.Parameters.AddWithValue("@Description", txtDesc.Text);
+
+        cmd.ExecuteNonQuery();
+        con.Close();
+        Session["add"] = "yes";
+        Response.Redirect("Default.aspx");
+    }
+
     //void GetAccounts(string keyword)
     //{
     //    con.Open();

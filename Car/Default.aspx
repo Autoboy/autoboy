@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Car_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    View Accounts
+    View Cars
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -15,31 +15,6 @@
             <div id="delete" runat="server" class="alert alert-success" visible="false">
                 Record deleted.
             </div>
-            <%--<div class="col-lg-4">
-                <div class="input-group">
-                    <span class="input-group-addon">Search By:</span>
-                    <asp:DropDownList ID="ddlTypes" runat="server" class="form-control"
-                        OnSelectedIndexChanged="ddlTypes_SelectedIndexChanged" AutoPostBack="true">
-                        <asp:ListItem>Keyword</asp:ListItem>
-                        <asp:ListItem>Status</asp:ListItem>    
-                    </asp:DropDownList>
-                </div>
-            </div>--%>
-            <%--<div id="keyword" runat="server" class="col-lg-4" visible="true">
-                <div class="input-group">
-                    <asp:TextBox ID="txtSearch" runat="server" class="form-control" placeholder="Keyword..."
-                        OnTextChanged="txtSearch_TextChanged" AutoPostBack="true" />
-                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                </div>
-            </div>--%>
-            <%--<div id="status" runat="server" class="col-lg-4" visible="false">
-                <asp:DropDownList ID="ddlStatus" runat="server" class="form-control"
-                    OnSelectedIndexChanged="ddlStatus_SelectedIndexChanged" AutoPostBack="true">
-                    <asp:ListItem>Active</asp:ListItem>
-                    <asp:ListItem>Inactive</asp:ListItem>
-                    <asp:ListItem>Blocked</asp:ListItem>
-                </asp:DropDownList>
-            </div>--%>
             <br /><br />
             <table class="table table-hover">
                 <thead>

@@ -86,9 +86,7 @@
                     <asp:ListView ID="lvSupplierPart" runat="server" OnItemCommand="lvSupplierPart_ItemCommand" >
                         <ItemTemplate>
                             <tr>
-                                <td><asp:Literal id="ltRefID" runat="server" Text='<%# Eval("RefID") %>' Visible="false" /></td>
-                                
-                                <td><%# Eval("PartName") %></td>
+                                <td><asp:Literal id="ltRefID" runat="server" Text='<%# Eval("RefID") %>' Visible="false" /><%# Eval("PartName") %></td>
                                 <td><%# Eval("Year") %></td>
                                 <td><%# Eval("EstPrice", "{0: #,###.00}") %></td>
                                 <td><%# Eval("EstTime") %></td>

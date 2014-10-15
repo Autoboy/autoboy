@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddCar.aspx.cs" Inherits="JobOrderCar_Add" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="Car_Add" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Link Customer and Car
+    Add a Car
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -41,7 +41,7 @@
         <div class="col-lg-12">
             <span class="pull-right">
                 <asp:Button ID="btnCancel" runat="server" class="btn btn-default" Text="Cancel" 
-                    PostBackUrl="~/Accounts/Default.aspx" formnovalidate />
+                    PostBackUrl="~/Car/Default.aspx" formnovalidate />
                 <asp:Button ID="btnAdd" runat="server" class="btn btn-success" Text="Add" OnClick="btnAdd_Click" />
             </span>
         </div>

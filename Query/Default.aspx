@@ -5,7 +5,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
-        <asp:ScriptManager runat="server"></asp:ScriptManager>
         <div class="col-lg-12">
             <div id="add" runat="server" class="alert alert-success" visible="false">
                 Record added.
@@ -42,53 +41,38 @@
                 </asp:DropDownList>
             </div>
             <br /><br />
-            <asp:UpdatePanel ID="upQuery" runat="server">
-                <ContentTemplate>
-                    <table class="table table-hover">
-                        <thead>
-                            <th>#</th>
-                            <th>Subject</th>
-                            <th>Date Submitted</th>
-                            <th>Email Address</th>
-                            <th>Status</th>
-                            <th></th>
-                        </thead>
-                        <tbody>
-                            <asp:ListView ID="lvQuery" runat="server" OnPagePropertiesChanging="lvQuery_PagePropertiesChanging" OnDataBound="lvQuery_DataBound">
-                                <ItemTemplate>
-                                    <tr>
-                                        <td><%# Eval("QueryID") %></td>
-                                        <td><%# Eval("Subject") %></td>
-                                        <td><%# Eval("QueryDate") %></td>
-                                        <td><%# Eval("EmailAddress") %></td>
-                                        <td><%# Eval("Status") %></td>
-                                        <td>
-                                            <a href='Details.aspx?ID=<%# Eval("QueryID") %>'><i class="fa fa-search"></i></a>&nbsp;
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </ItemTemplate>
-                                <EmptyDataTemplate>
-                                    <tr>
-                                        <td colspan="8"><h2 class="text-center">No records found.</h2></td>
-                                    </tr>
-                                </EmptyDataTemplate>
-                            </asp:ListView>
-                        </tbody>
-                    </table>
-                    <center>
-                        <asp:DataPager ID="dpQuery" runat="server" PageSize="10" PagedControlID="lvQuery">
-                         <Fields>
-                                <asp:NumericPagerField ButtonType="Button"
-                                    CurrentPageLabelCssClass="btn btn-success"
-                                    NumericButtonCssClass="btn btn-default"
-                                    NextPreviousButtonCssClass="btn btn-default" />
-                        </Fields>
-                        </asp:DataPager>
-                    </center>
-                </ContentTemplate>
-            </asp:UpdatePanel>
-            
+            <table class="table table-hover">
+                <thead>
+                    <th>#</th>
+                    <th>Subject</th>
+                    <th>Date Submitted</th>
+                    <th>Email Address</th>
+                    <th>Status</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <asp:ListView ID="lvQuery" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("QueryID") %></td>
+                                <td><%# Eval("Subject") %></td>
+                                <td><%# Eval("QueryDate") %></td>
+                                <td><%# Eval("EmailAddress") %></td>
+                                <td><%# Eval("Status") %></td>
+                                <td>
+                                    <a href='Details.aspx?ID=<%# Eval("QueryID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    </a>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <EmptyDataTemplate>
+                            <tr>
+                                <td colspan="8"><h2 class="text-center">No records found.</h2></td>
+                            </tr>
+                        </EmptyDataTemplate>
+                    </asp:ListView>
+                </tbody>
+            </table>
         </div>
     </form>
 </asp:Content>

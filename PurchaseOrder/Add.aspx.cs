@@ -73,6 +73,8 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
+        txtPONo.Attributes.Add("disabled", "disabled");
+        ddlSupplier.Attributes.Add("disabled", "disabled");
         double totalAmount = GetTotalAmount();
         con.Open();
         SqlCommand cmd = new SqlCommand();

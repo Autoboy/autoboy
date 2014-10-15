@@ -15,25 +15,25 @@
             <div class="form-group">
                 <label class="control-label col-lg-4">Email</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtEmail" runat="server" class="form-control" type="email" MaxLength="80" required />
+                    <asp:TextBox ID="txtEmail" runat="server" AutoComplete="Off" class="form-control" type="email" MaxLength="80" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">Password</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtPassword" runat="server" class="form-control" TextMode="Password" MaxLength="20" required />
+                    <asp:TextBox ID="txtPassword" runat="server" AutoComplete="Off" class="form-control" TextMode="Password" MaxLength="20" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">First Name</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtFN" runat="server" class="form-control" MaxLength="80" required />
+                    <asp:TextBox ID="txtFN" runat="server" AutoComplete="Off" class="form-control" MaxLength="80" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">Last Name</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtLN" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:TextBox ID="txtLN" runat="server" AutoComplete="Off" class="form-control" MaxLength="50" required />
                 </div>
             </div>
         </div>
@@ -41,25 +41,25 @@
             <div class="form-group">
                 <label class="control-label col-lg-4">Street</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtStreet" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:TextBox ID="txtStreet" runat="server" AutoComplete="Off" class="form-control" MaxLength="50" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">Municipality</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtAddress" runat="server" class="form-control" MaxLength="100" required />
+                    <asp:TextBox ID="txtAddress" runat="server" AutoComplete="Off" class="form-control" MaxLength="100" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">City</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtCity" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:TextBox ID="txtCity" runat="server" AutoComplete="Off" class="form-control" MaxLength="50" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">Mobile</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtMobile" runat="server" class="form-control" MaxLength="12" />
+                    <asp:TextBox ID="txtMobile" runat="server" AutoComplete="Off" class="form-control" MaxLength="12" />
                 </div>
             </div>
         </div>

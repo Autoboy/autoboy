@@ -171,4 +171,22 @@ public partial class Parts_Default : System.Web.UI.Page
     //{
     //    GetAccountsByStatus();
     //}
+    protected void lvModels_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+    {
+        dpModels.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        GetModels();
+    }
+    protected void lvParts_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+    {
+        dpParts.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        GetParts();
+    }
+    protected void lvModels_DataBound(object sender, EventArgs e)
+    {
+        dpModels.Visible = dpModels.TotalRowCount > dpModels.PageSize;
+    }
+    protected void lvParts_DataBound(object sender, EventArgs e)
+    {
+        dpParts.Visible = dpParts.TotalRowCount > dpParts.PageSize;
+    }
 }

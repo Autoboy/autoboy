@@ -143,4 +143,13 @@ public partial class Query_Default : System.Web.UI.Page
     {
 
     }
+    protected void lvQuery_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
+    {
+        dpQuery.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
+        GetQuery();
+    }
+    protected void lvQuery_DataBound(object sender, EventArgs e)
+    {
+        dpQuery.Visible = dpQuery.TotalRowCount > dpQuery.PageSize;
+    }
 }

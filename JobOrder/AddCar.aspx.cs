@@ -23,12 +23,14 @@ public partial class JobOrderCar_Add : System.Web.UI.Page
         }
     }
 
+    
+
     void GetUserID()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT UID, EmailAddress FROM AccountTbl";
+        cmd.CommandText = "SELECT TOP 1 UID, EmailAddress FROM AccountTbl ORDER BY UID DESC";
         SqlDataReader dr = cmd.ExecuteReader();
         ddlAccount.DataSource = dr;
         ddlAccount.DataTextField = "EmailAddress";

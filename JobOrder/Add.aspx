@@ -16,62 +16,11 @@
         
         <div class="col-lg-6">
             <div class="form-group">
-                <label class="control-label col-lg-3">First Name:</label>
-          
+                <label class="control-label col-lg-3">Service Type:</label>
                 <div class="col-lg-8">
-                    <asp:TextBox ID="txtFirstName" runat="server" class="form-control"  MaxLength="80" required />
+                    <asp:DropDownList ID="ddlServiceType" runat="server" class="form-control" required />
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Last Name:</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtLastName" runat="server" class="form-control"  MaxLength="80" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Email Address:</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtEmail" runat="server" class="form-control"  MaxLength="80" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Chassis No:</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtChassisNo" runat="server" class="form-control"  MaxLength="80" required />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Customer Type:</label>
-                <div class="col-lg-4">
-                    <asp:DropDownList ID="ddlCustomerType" runat="server" class="form-control"  MaxLength="80" required />
-                </div>
-            </div>
-
-          
-            
-            <div class="form-group" Visible="false">
-                    <div class="col-lg-4">
-                        <asp:DropDownList ID="ddlSupplier" runat="server" CssClass="form-control" Visible="false"/>
-                    </div>
-                </div>
-            <h4>Select Model and Year</h4>
-               <div class="form-group">
-                <label class="control-label col-lg-2">Model</label>
-                <div class="col-lg-4">
-                    <asp:DropDownList ID="ddlModels" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlModels_SelectedIndexChanged" />
-                </div>
-                <label class="control-label col-lg-2">Year</label>
-                <div class="col-lg-4">
-                    <asp:DropDownList ID="ddlYear" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlModels_SelectedIndexChanged" />
-                </div>   
-            </div>
-            <h4>Select Service Type</h4>
-               <div class="form-group">
-                <label class="control-label col-lg-2">Service</label>
-                <div class="col-lg-4">
-                    <asp:DropDownList ID="ddlServiceType" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlModels_SelectedIndexChanged" />
-                </div>
-                   </div>
             <h4>Select Parts</h4>
 
                     <table  class="table table-hover">

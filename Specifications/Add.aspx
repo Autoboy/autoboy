@@ -8,6 +8,12 @@
         <div class="col-lg-6">
             <h2>Summary</h2>
             <div class="form-group">
+                    <label class="control-label col-lg-3">Service Type</label>
+                    <div class="col-lg-5">
+                        <asp:DropDownList ID="ddlServiceType" runat="server" CssClass="form-control"/>
+                    </div>
+                </div>
+            <div class="form-group">
                     <label class="control-label col-lg-3">Part Name</label>
                     <div class="col-lg-9">
                         <asp:DropDownList ID="ddlPartName" runat="server" CssClass="form-control"/>
@@ -47,6 +53,7 @@
             <h2>Specifications</h2>
             <table  class="table table-hover">
                 <thead>
+                    <th>Service Type</th>
                     <th>Part Name</th>
                     <th>Model</th>
                     <th>Year</th>
@@ -58,8 +65,9 @@
                     <asp:ListView ID="lvSpecs" runat="server" OnItemCommand="lvSpecs_ItemCommand">
                         <ItemTemplate>
                             <tr>
-                                <td><asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("SpecificID") %>' Visible="false" /><%# Eval("ModelName") %></td>
-                                <%--<td><%#Eval("PartName") %></td>--%>
+                                <td><asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("SpecificID") %>' Visible="false" /><%#  Eval("ServiceType")%></td>
+                                <td><%# Eval("ModelName") %></td>                    
+                                <td><%# Eval("PartName") %></td>
                                 <td><%# Eval("Year") %></td>
                                 <td><%# Eval("EstPrice", "{0: #,###.00}") %></td>
                                 <td><%# Eval("EstTime") %></td>

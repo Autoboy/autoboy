@@ -71,11 +71,10 @@ public partial class Parts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT SpecificTbl.SpecificID, ServiceTypeTbl.ServiceType, ModelTbl.ModelName, PartTbl.PartName SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
-            "FROM SpecificTbl INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID " +
-            "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
-            "INNER JOIN ServiceTypeTbl ON SpecificTbl.ServiceTypeID = ServiceTypeTbl.ServiceTypeID " +  
-            "WHERE SpecificTbl.PartID = @PartID";
+        cmd.CommandText = "SELECT spt.SpecificID, stt.ServiceType, mdt.ModelName, prt.PartName, spt.Year, spt.EstPrice, spt.EstTime " + 
+                            "FROM SpecificTbl spt INNER JOIN ModelTbl mdt ON spt.ModelID = mdt.ModelID " +
+                            "INNER JOIN PartTbl prt ON spt.PartID = prt.PartID " +
+                            "INNER JOIN ServiceTypeTbl stt ON stt.ServiceTypeID = spt.ServiceTypeID WHERE spt.PartID =@PartID";
         cmd.Parameters.AddWithValue("@PartID", ddlPartName.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)

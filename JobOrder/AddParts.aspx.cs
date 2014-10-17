@@ -38,10 +38,16 @@ public partial class SupplierParts_Add : System.Web.UI.Page
             GetJobOrderTotal();
             GetServiceType();
             GetCarParts();
+            GetTranNo();
             
 
 
         }
+    }
+    void GetTranNo()
+    {
+        TextBox1.Text = GetTransactionNumber().ToString();
+        
     }
     void GetCar()
 >>>>>>> origin/master
@@ -395,5 +401,42 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Close();
         return existing;
 >>>>>>> origin/master
+    }
+
+    int GetTransactionNumber()
+    {
+        int number = 0;
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT TransactionNumber + 1 AS Number FROM TransactionTbl " +
+                            "WHERE TransactionNumber = 0";
+        SqlDataReader data = cmd.ExecuteReader();
+        if (data.HasRows)
+        {
+            while (data.Read())
+            {
+                number = int.Parse(data["Number"].ToString());
+                number = int.Parse(DateTime.Now.ToString("yyyMMdd") + "01");
+            }
+            con.Close();
+        }
+        else
+        {
+            con.Close();
+            number = int.Parse(DateTime.Now.ToString("yyyMMdd") + "01");
+        }
+        return number;
+    }
+
+    protected void btnCreateJO_Click(object sender, EventArgs e)
+    {
+
+        //con.Open();
+        //SqlCommand cmd = new SqlCommand();
+        //cmd.Connection = con;
+        //cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate)" +
+        //                    "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
+        //cmd.Parameters.AddWithValue("@TransactionNumber", );
     }
 }

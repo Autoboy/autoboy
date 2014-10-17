@@ -193,8 +193,19 @@
                 <div class="col-lg-3">
                     <asp:TextBox ID="txtTotalEstimatedPrice" runat="server" class="form-control"  MaxLength="80" Enabled="false"/>
                 </div>
+                <label class="control-label col-lg-7">Ito yung Tran Num</label>
+                <div class="col-lg-3">
+                    <asp:TextBox ID="TextBox1" runat="server" class="form-control"  MaxLength="80" Enabled="false"/>
+                </div>
                 
             </div>
+            <div class="col-lg-10">
+                <span class="pull-right">
+                    <asp:Button ID="btnCreateJO" runat="server" class="btn btn-success" Text="Create Job Order" OnClick="btnCreateJO_Click"/>
+                    <asp:Button ID="btnCancelJO" runat="server" class="btn btn-default" Text="Cancel" />
+                </span>
+             </div>
+
             </div>
                                   
           

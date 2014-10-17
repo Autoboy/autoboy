@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="SupplierParts_Add"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="JobOrderTemp_Add"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
     Manage Supplier-Part Link
@@ -8,24 +8,18 @@
         <asp:ScriptManager runat="server" />
             <asp:UpdatePanel ID="upParts" runat="server">
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="ddlModels" EventName="SelectedIndexChanged" />
+                    <asp:AsyncPostBackTrigger ControlID="ddlServiceType" EventName="SelectedIndexChanged" />
                     <asp:AsyncPostBackTrigger ControlID="lvSupplierPart" EventName="ItemCommand" />
                     <asp:AsyncPostBackTrigger ControlID="lvSpecView" EventName="ItemCommand" />
                 </Triggers>
                 <ContentTemplate>
         <div class="col-lg-6">
-            <h4>Select A Supplier</h4>
-            <div class="form-group">
-                    <label class="control-label col-lg-3">Supplier</label>
-                    <div class="col-lg-4">
-                        <asp:DropDownList ID="ddlSupplier" runat="server" CssClass="form-control"/>
-                    </div>
-                </div>
-            <h4>Select A Model</h4>
+            
+            <h4>Service Type</h4>
                <div class="form-group">
                 <label class="control-label col-lg-3">Model</label>
                 <div class="col-lg-4">
-                    <asp:DropDownList ID="ddlModels" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlModels_SelectedIndexChanged" />
+                    <asp:DropDownList ID="ddlServiceType" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlServiceType_SelectedIndexChanged" />
                 </div>
             </div>
             <h4>Select a Part</h4>

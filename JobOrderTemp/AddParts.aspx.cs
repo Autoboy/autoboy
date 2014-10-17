@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+using System.Data;
+using System.Data.SqlClient;
+
+public partial class JobOrderTemp_Add : System.Web.UI.Page
+{
+    SqlConnection con = new SqlConnection(Helper.GetCon());
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            GetServiceType();
+            GetSpecs();
+            GetSupplierPart2();
+
+        }
+    }
+
+
+    void GetServiceType()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT ServiceTypeID, ServiceType FROM ServiceTypeTbl";
+        SqlDataReader data = cmd.ExecuteReader();
+        ddlServiceType.DataSource = data;
+        ddlServiceType.DataTextField = "ServiceType";
+        ddlServiceType.DataValueField = "ServiceTypeID";
+        ddlServiceType.DataBind();
+        con.Close();
+
+    }
+
+    void GetSpecs()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
+                            "FROM SpecificTbl INNER JOIN PartTbl " +
+                            "ON SpecificTbl.PartID = PartTbl.PartID " +
+                            "WHERE SpecificTbl.ModelID = @ModelID";
+        cmd.Parameters.AddWithValue("@ModelID", ddlServiceType.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSpecView.DataSource = data;
+        lvSpecView.DataBind();
+        con.Close();
+    }
+
+    void GetSupplierPart()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
+                          "FROM SpecificTbl INNER JOIN PartTbl " +
+                          "ON SpecificTbl.PartID = PartTbl.PartID " +
+                          "INNER JOIN SupplierPartsTbl " +
+                          "ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
+                          "WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSupplierPart.DataSource = data;
+        lvSupplierPart.DataBind();
+        con.Close();
+
+
+    }
+
+    void GetSupplierPart2()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " + 
+                          "FROM SupplierPartsTbl INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " + 
+                          "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSupplierPart.DataSource = data;
+        lvSupplierPart.DataBind();
+        con.Close();
+
+
+    }
+
+    protected void btnAddLink_Click(object sender, EventArgs e)
+    {
+
+        
+    }
+
+    bool IsExisting(string partID)
+    {
+        bool existing = true;
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID FROM SupplierPartsTbl " +
+            "INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
+            "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
+            "WHERE SupplierPartsTbl.SupplierID = @SupplierID AND PartTbl.PartID=@PartID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
+        cmd.Parameters.AddWithValue("@PartID", partID);
+        SqlDataReader data = cmd.ExecuteReader();
+        if (data.HasRows)
+            existing = true;
+        else
+            existing = false;
+        con.Close();
+        return existing;
+    }
+
+    protected void lvSpecView_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "addLink")
+        {
+            Literal ltSpecificID = (Literal)e.Item.FindControl("ltSpecificID");
+            Literal ltPartID = (Literal)e.Item.FindControl("ltPartID");
+
+            bool existing = IsExisting(ltPartID.Text);
+
+            if (existing)
+                error.Visible = true;
+            else
+            {
+                error.Visible = false;
+                con.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandText = "INSERT INTO SupplierPartsTbl VALUES (@SupplierID, @SpecificID)";
+                cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
+                cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+        else
+        {
+            Response.Redirect("Default.aspx");
+        }
+        GetSpecs();
+        GetSupplierPart2();
+    }
+
+    protected void lvSpecs_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        
+    }
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+       
+    }
+    protected void ddlServiceType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GetSpecs();
+    }
+
+    protected void lvSupplierPart_ItemCommand(object sender, ListViewCommandEventArgs e)
+    {
+        if (e.CommandName == "deleteitem")
+        {
+            Literal ltRefID = (Literal)e.Item.FindControl("ltRefID");
+            con.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.CommandText = "DELETE FROM SupplierPartsTbl WHERE RefID=@RefID";
+            cmd.Parameters.AddWithValue("@RefID", ltRefID.Text);
+            cmd.ExecuteNonQuery();
+            con.Close();
+        }
+        GetSupplierPart2();
+        
+    }
+}

@@ -74,10 +74,7 @@
              
             <asp:Panel ID="pnlParts" runat="server" Visible="false">
                 
-                <div class="pull-left">
-                    <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-success" Text="Submit" 
-                        OnClientClick='return confirm("Submit record?")' Visible="true" />
-                </div>
+              
             </asp:Panel>
         </div>
             

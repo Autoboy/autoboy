@@ -67,11 +67,11 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT TOP 1 CarID, ChassisNo FROM CarTbl ORDER BY CarID DESC";
+        cmd.CommandText = "SELECT TOP 1 ChassisNo FROM CarTbl ORDER BY CarID DESC";
         SqlDataReader dr = cmd.ExecuteReader();
         ddlChassisNo.DataSource = dr;
         ddlChassisNo.DataTextField = "ChassisNo";
-        ddlChassisNo.DataValueField = "CarID";
+        ddlChassisNo.DataValueField = "ChassisNo";
         ddlChassisNo.DataBind();
         con.Close();
     }
@@ -271,10 +271,10 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate)" +
+        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate) " +
                             "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
         cmd.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
-        cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedItem);
+        cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedValue);
         cmd.Parameters.AddWithValue("@UID", ddlCustomer.SelectedValue);
         cmd.Parameters.AddWithValue("@EstTime", txtTotalEstimatedTime.Text);
         cmd.Parameters.AddWithValue("@EstCost", txtTotalEstimatedPrice.Text);

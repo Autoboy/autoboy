@@ -5,7 +5,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
-        <asp:ScriptManager runat="server"></asp:ScriptManager>
         <div class="col-lg-12">
             <div id="add" runat="server" class="alert alert-success" visible="false">
                 Record added.
@@ -42,58 +41,44 @@
                 </asp:DropDownList>
             </div>
             <br /><br />
-            <asp:UpdatePanel ID="upUsers" runat="server">
-                <ContentTemplate>
-                    <table class="table table-hover">
-                        <thead>
-                            <th>#</th>
-                            <th>User Type</th>
-                            <th>Email</th>
-                            <th>User</th>
-                            <th>Address</th>
-                            <th>Mobile</th>
-                            <th>Status</th>
-                            <th></th>
-                        </thead>
-                        <tbody>
-                            <asp:ListView ID="lvUsers" runat="server" OnPagePropertiesChanging="lvUsers_PagePropertiesChanging" OnDataBound="lvUsers_DataBound">
-                                <ItemTemplate>
-                                    <tr>
-                                        <td><%# Eval("UID") %></td>
-                                        <td><%# Eval("UserType") %></td>
-                                        <td><%# Eval("EmailAddress") %></td>
-                                        <td><%# Eval("LastName") %>, <%# Eval("FirstName") %></td>
-                                        <td><%# Eval("Street") %> <%# Eval("Address") %>, <%# Eval("City") %></td>
-                                        <td><%# Eval("MobileNo") %></td>
-                                        <td><%# Eval("Status") %></td>
-                                        <td>
-                                            <a href='Details.aspx?ID=<%# Eval("UID") %>'><i class="fa fa-search"></i></a>&nbsp;
-                                            <a href='Delete.aspx?ID=<%# Eval("UID") %>' onclick='return confirm("Delete record?")'>
-                                                <i class="fa fa-trash-o"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </ItemTemplate>
-                                <EmptyDataTemplate>
-                                    <tr>
-                                        <td colspan="8"><h2 class="text-center">No records found.</h2></td>
-                                    </tr>
-                                </EmptyDataTemplate>
-                            </asp:ListView>
-                        </tbody>
-                            </table>
-                    <center>
-                        <asp:DataPager ID="dpUsers" runat="server" PageSize="10" PagedControlID="lvUsers">
-                         <Fields>
-                                <asp:NumericPagerField ButtonType="Button"
-                                    CurrentPageLabelCssClass="btn btn-success"
-                                    NumericButtonCssClass="btn btn-default"
-                                    NextPreviousButtonCssClass="btn btn-default" />
-                        </Fields>
-                        </asp:DataPager>
-                    </center>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+            <table class="table table-hover">
+                <thead>
+                    <th>#</th>
+                    <th>User Type</th>
+                    <th>Email</th>
+                    <th>User</th>
+                    <th>Address</th>
+                    <th>Mobile</th>
+                    <th>Status</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <asp:ListView ID="lvUsers" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%# Eval("UID") %></td>
+                                <td><%# Eval("UserType") %></td>
+                                <td><%# Eval("EmailAddress") %></td>
+                                <td><%# Eval("LastName") %>, <%# Eval("FirstName") %></td>
+                                <td><%# Eval("Street") %> <%# Eval("Address") %>, <%# Eval("City") %></td>
+                                <td><%# Eval("MobileNo") %></td>
+                                <td><%# Eval("Status") %></td>
+                                <td>
+                                    <a href='Details.aspx?ID=<%# Eval("UID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    <a href='Delete.aspx?ID=<%# Eval("UID") %>' onclick='return confirm("Delete record?")'>
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ItemTemplate>
+                        <EmptyDataTemplate>
+                            <tr>
+                                <td colspan="8"><h2 class="text-center">No records found.</h2></td>
+                            </tr>
+                        </EmptyDataTemplate>
+                    </asp:ListView>
+                </tbody>
+            </table>
         </div>
     </form>
 </asp:Content>

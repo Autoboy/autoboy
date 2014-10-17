@@ -130,13 +130,4 @@ public partial class Accounts_Default : System.Web.UI.Page
     {
         GetAccountsByStatus();
     }
-    protected void lvUsers_PagePropertiesChanging(object sender, PagePropertiesChangingEventArgs e)
-    {
-        dpUsers.SetPageProperties(e.StartRowIndex, e.MaximumRows, false);
-        GetAccounts();
-    }
-    protected void lvUsers_DataBound(object sender, EventArgs e)
-    {
-        dpUsers.Visible = dpUsers.TotalRowCount > dpUsers.PageSize;
-    }
 }

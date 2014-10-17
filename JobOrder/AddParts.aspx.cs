@@ -8,11 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-<<<<<<< HEAD
-public partial class JobOrderTemp_Add : System.Web.UI.Page
-=======
 public partial class SupplierParts_Add : System.Web.UI.Page
->>>>>>> origin/master
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -20,17 +16,6 @@ public partial class SupplierParts_Add : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-<<<<<<< HEAD
-            GetServiceType();
-            GetSpecs();
-            GetSupplierPart2();
-
-        }
-    }
-
-
-    void GetServiceType()
-=======
             GetEmail();
             GetChassisNo();
             GetCar();
@@ -50,24 +35,10 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         
     }
     void GetCar()
->>>>>>> origin/master
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-<<<<<<< HEAD
-        cmd.CommandText = "SELECT ServiceTypeID, ServiceType FROM ServiceTypeTbl";
-        SqlDataReader data = cmd.ExecuteReader();
-        ddlServiceType.DataSource = data;
-        ddlServiceType.DataTextField = "ServiceType";
-        ddlServiceType.DataValueField = "ServiceTypeID";
-        ddlServiceType.DataBind();
-        con.Close();
-
-    }
-
-    void GetSpecs()
-=======
         cmd.CommandText = "SELECT TOP 1 a.CarID, b.ModelName FROM CarTbl a INNER JOIN ModelTbl b ON a.ModelID = b.ModelID ORDER BY CarID DESC";
         SqlDataReader dr = cmd.ExecuteReader();
         ddlCar.DataSource = dr;
@@ -79,25 +50,10 @@ public partial class SupplierParts_Add : System.Web.UI.Page
     
     }
     void GetEmail()
->>>>>>> origin/master
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-<<<<<<< HEAD
-        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
-                            "FROM SpecificTbl INNER JOIN PartTbl " +
-                            "ON SpecificTbl.PartID = PartTbl.PartID " +
-                            "WHERE SpecificTbl.ModelID = @ModelID";
-        cmd.Parameters.AddWithValue("@ModelID", ddlServiceType.SelectedValue);
-        SqlDataReader data = cmd.ExecuteReader();
-        lvSpecView.DataSource = data;
-        lvSpecView.DataBind();
-        con.Close();
-    }
-
-    void GetSupplierPart()
-=======
         cmd.CommandText = "SELECT TOP 1 UID, EmailAddress FROM AccountTbl ORDER BY UID DESC";
         SqlDataReader dr = cmd.ExecuteReader();
         ddlCustomer.DataSource = dr;
@@ -107,29 +63,10 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Close();
     }
     void GetChassisNo()
->>>>>>> origin/master
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-<<<<<<< HEAD
-        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
-                          "FROM SpecificTbl INNER JOIN PartTbl " +
-                          "ON SpecificTbl.PartID = PartTbl.PartID " +
-                          "INNER JOIN SupplierPartsTbl " +
-                          "ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
-                          "WHERE SupplierPartsTbl.SupplierID = @SupplierID";
-        cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
-        SqlDataReader data = cmd.ExecuteReader();
-        lvSupplierPart.DataSource = data;
-        lvSupplierPart.DataBind();
-        con.Close();
-
-
-    }
-
-    void GetSupplierPart2()
-=======
         cmd.CommandText = "SELECT TOP 1 CarID, ChassisNo FROM CarTbl ORDER BY CarID DESC";
         SqlDataReader dr = cmd.ExecuteReader();
         ddlChassisNo.DataSource = dr;
@@ -154,98 +91,10 @@ public partial class SupplierParts_Add : System.Web.UI.Page
     }
 
     void GetCarParts()
->>>>>>> origin/master
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-<<<<<<< HEAD
-        cmd.CommandText = "SELECT SupplierPartsTbl.RefID, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " + 
-                          "FROM SupplierPartsTbl INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " + 
-                          "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID WHERE SupplierPartsTbl.SupplierID = @SupplierID";
-        cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
-        SqlDataReader data = cmd.ExecuteReader();
-        lvSupplierPart.DataSource = data;
-        lvSupplierPart.DataBind();
-        con.Close();
-
-
-    }
-
-    protected void btnAddLink_Click(object sender, EventArgs e)
-    {
-
-        
-    }
-
-    bool IsExisting(string partID)
-    {
-        bool existing = true;
-        con.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandText = "SELECT SupplierPartsTbl.RefID FROM SupplierPartsTbl " +
-            "INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
-            "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
-            "WHERE SupplierPartsTbl.SupplierID = @SupplierID AND PartTbl.PartID=@PartID";
-        cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
-        cmd.Parameters.AddWithValue("@PartID", partID);
-        SqlDataReader data = cmd.ExecuteReader();
-        if (data.HasRows)
-            existing = true;
-        else
-            existing = false;
-        con.Close();
-        return existing;
-    }
-
-    protected void lvSpecView_ItemCommand(object sender, ListViewCommandEventArgs e)
-    {
-        if (e.CommandName == "addLink")
-        {
-            Literal ltSpecificID = (Literal)e.Item.FindControl("ltSpecificID");
-            Literal ltPartID = (Literal)e.Item.FindControl("ltPartID");
-
-            bool existing = IsExisting(ltPartID.Text);
-
-            if (existing)
-                error.Visible = true;
-            else
-            {
-                error.Visible = false;
-                con.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = con;
-                cmd.CommandText = "INSERT INTO SupplierPartsTbl VALUES (@SupplierID, @SpecificID)";
-                cmd.Parameters.AddWithValue("@SupplierID", ddlServiceType.SelectedValue);
-                cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-        }
-        else
-        {
-            Response.Redirect("Default.aspx");
-        }
-        GetSpecs();
-        GetSupplierPart2();
-    }
-
-    protected void lvSpecs_ItemCommand(object sender, ListViewCommandEventArgs e)
-    {
-        
-    }
-    protected void btnSubmit_Click(object sender, EventArgs e)
-    {
-       
-    }
-    protected void ddlServiceType_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        GetSpecs();
-    }
-
-    protected void lvSupplierPart_ItemCommand(object sender, ListViewCommandEventArgs e)
-=======
         cmd.CommandText = "SELECT SpecificTbl.SpecificID, PartTbl.PartName, SpecificTbl.EstPrice, SpecificTbl.EstTime, SpecificTbl.ServiceTypeID " +
                          "FROM SupplierPartsTbl INNER JOIN " +
                          "SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID INNER JOIN " +
@@ -348,23 +197,10 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         GetJobOrderTotal();
     }
     protected void lvJobOrderParts_ItemCommand(object sender, ListViewCommandEventArgs e)
->>>>>>> origin/master
     {
         if (e.CommandName == "deleteitem")
         {
             Literal ltRefID = (Literal)e.Item.FindControl("ltRefID");
-<<<<<<< HEAD
-            con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandText = "DELETE FROM SupplierPartsTbl WHERE RefID=@RefID";
-            cmd.Parameters.AddWithValue("@RefID", ltRefID.Text);
-            cmd.ExecuteNonQuery();
-            con.Close();
-        }
-        GetSupplierPart2();
-        
-=======
             Literal ltServiceID = (Literal)e.Item.FindControl("ltServiceID");
             con.Open();
             SqlCommand cmd = new SqlCommand();
@@ -400,7 +236,6 @@ public partial class SupplierParts_Add : System.Web.UI.Page
             existing = false;
         con.Close();
         return existing;
->>>>>>> origin/master
     }
 
     int GetTransactionNumber()
@@ -431,12 +266,22 @@ public partial class SupplierParts_Add : System.Web.UI.Page
 
     protected void btnCreateJO_Click(object sender, EventArgs e)
     {
+        DateTime date = DateTime.Now;
+        int TransactionNumber = GetTransactionNumber();
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate)" +
+                            "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
+        cmd.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
+        cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedItem);
+        cmd.Parameters.AddWithValue("@UID", ddlCustomer.SelectedValue);
+        cmd.Parameters.AddWithValue("@EstTime", txtTotalEstimatedTime.Text);
+        cmd.Parameters.AddWithValue("@EstCost", txtTotalEstimatedPrice.Text);
+        cmd.Parameters.AddWithValue("@OrderDate", date);
+        cmd.ExecuteNonQuery();
+        con.Close();
 
-        //con.Open();
-        //SqlCommand cmd = new SqlCommand();
-        //cmd.Connection = con;
-        //cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate)" +
-        //                    "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
-        //cmd.Parameters.AddWithValue("@TransactionNumber", );
+
     }
 }

@@ -1,30 +1,3 @@
-<<<<<<< HEAD
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="JobOrderTemp_Add"  %>
-
-<asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Manage Supplier-Part Link
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
-    <form runat="server" class="form-horizontal">
-        <asp:ScriptManager runat="server" />
-            <asp:UpdatePanel ID="upParts" runat="server">
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="ddlServiceType" EventName="SelectedIndexChanged" />
-                    <asp:AsyncPostBackTrigger ControlID="lvSupplierPart" EventName="ItemCommand" />
-                    <asp:AsyncPostBackTrigger ControlID="lvSpecView" EventName="ItemCommand" />
-                </Triggers>
-                <ContentTemplate>
-        <div class="col-lg-6">
-            
-            <h4>Service Type</h4>
-               <div class="form-group">
-                <label class="control-label col-lg-3">Model</label>
-                <div class="col-lg-4">
-                    <asp:DropDownList ID="ddlServiceType" runat="server" CssClass="form-control" AutoPostBack="True" OnSelectedIndexChanged="ddlServiceType_SelectedIndexChanged" />
-                </div>
-            </div>
-            <h4>Select a Part</h4>
-=======
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddParts.aspx.cs" Inherits="SupplierParts_Add"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
@@ -60,29 +33,14 @@
                 </div>
             </div>
             <h4>Select Parts</h4>
->>>>>>> origin/master
 
                     <table  class="table table-hover">
                         <thead>
                             <th>Part Name</th>
-<<<<<<< HEAD
-                            <th>Year</th>
-=======
->>>>>>> origin/master
                             <th>Estimated Price</th>
                             <th>Estimated Time</th>
                         </thead>
                         <tbody>
-<<<<<<< HEAD
-                            <asp:ListView ID="lvSpecView" runat="server" OnItemCommand="lvSpecView_ItemCommand">
-                                <ItemTemplate>
-                                    <tr>
-                                
-                                        <td><asp:Literal id="ltPartID" runat="server" Text='<%# Eval("PartID") %>' Visible="false" /><%# Eval("PartName") %><asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("SpecificID") %>' Visible="false" /></td>
-                                        <td><%# Eval("Year") %></td>
-                                        <td><%# Eval("EstPrice", "{0: #,###.00}") %></td>
-                                        <td><%# Eval("EstTime") %></td>
-=======
                             <asp:ListView ID="lvCarParts" runat="server" OnItemCommand="lvCarParts_ItemCommand">
                                 <ItemTemplate>
                                     <tr>
@@ -99,7 +57,6 @@
                                                 <asp:ListItem>3</asp:ListItem>
                                                 <asp:ListItem>4</asp:ListItem>
                                             </asp:DropDownList></td>
->>>>>>> origin/master
                                         <td><asp:LinkButton ID="btnAddLink" runat="server" CommandName="addLink"><i class="fa fa-plus-circle"></i></asp:LinkButton></td>
                                     </tr>
                                 </ItemTemplate>
@@ -123,10 +80,7 @@
                 </div>
             </asp:Panel>
         </div>
-<<<<<<< HEAD
-=======
             
->>>>>>> origin/master
         <div class="col-lg-6">
             <div id="error" runat="server" class="alert alert-danger" visible="false">
                 Part is already existing.
@@ -134,33 +88,18 @@
             <h3>Parts to be Added to: </h3>
             <table  class="table table-hover">
                 <thead>
-<<<<<<< HEAD
-                    <th>Part Name</th>
-                    <th>Year</th>
-=======
                     <th>Service Type</th>
                     <th>Part Name</th>    
->>>>>>> origin/master
                     <th>Estimated Price</th>
                     <th>Estimated Time</th>
                     <th></th>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                    <asp:ListView ID="lvSupplierPart" runat="server" OnItemCommand="lvSupplierPart_ItemCommand" >
-                        <ItemTemplate>
-                            <tr>
-                                <td><asp:Literal id="ltRefID" runat="server" Text='<%# Eval("RefID") %>' Visible="false" /></td>
-                                
-                                <td><%# Eval("PartName") %></td>
-                                <td><%# Eval("Year") %></td>
-=======
                     <asp:ListView ID="lvJobOrderParts" runat="server" OnItemCommand="lvJobOrderParts_ItemCommand" >
                         <ItemTemplate>
                             <tr>
                                 <td><%# Eval("ServiceType") %><asp:Literal id="ltServiceID" runat="server" Text='<%# Eval("ServiceID") %>' Visible="false" /></td>
                                 <td><asp:Literal id="ltRefID" runat="server" Text='<%# Eval("TID") %>' Visible="false" /><%# Eval("PartName") %></td>
->>>>>>> origin/master
                                 <td><%# Eval("EstPrice", "{0: #,###.00}") %></td>
                                 <td><%# Eval("EstTime") %></td>
                                 <td><asp:LinkButton ID="btnDelete" runat="server" CommandName="deleteitem"
@@ -177,13 +116,6 @@
                     </asp:ListView>
                 </tbody>
             </table>
-<<<<<<< HEAD
-            
-            
-        </div>
-                                    </ContentTemplate>
-            </asp:UpdatePanel>
-=======
             <div class="form-group">
                 <label class="control-label col-lg-7">Estimated Time</label>
                 <div class="col-lg-3">
@@ -209,7 +141,6 @@
             </div>
                                   
           
->>>>>>> origin/master
     </form>
 </asp:Content>
 

@@ -38,24 +38,18 @@ public partial class JobOrderDetails_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-<<<<<<< HEAD
         cmd.CommandText = "INSERT INTO AccountTbl (EmailAddress,TypeID,FirstName,LastName) VALUES (@EmailAddress,@TypeID,@FirstName,@LastName)";
-=======
         cmd.CommandText = "INSERT INTO AccountTbl (EmailAddress,TypeID,FirstName,LastName) VALUES (@EmailAddress,@TypeID,@FirstName,@LastName); " +
             "SELECT TOP 1 UID FROM AccountTbl ORDER BY UID DESC;";
->>>>>>> origin/master
         cmd.Parameters.AddWithValue("@EmailAddress",txtEmail.Text);
         cmd.Parameters.AddWithValue("@TypeID", ddlCustomerType.SelectedValue);
         cmd.Parameters.AddWithValue("@FirstName", txtFirstName.Text);
         cmd.Parameters.AddWithValue("@LastName", txtLastName.Text);
-<<<<<<< HEAD
         cmd.ExecuteNonQuery();
         con.Close();
-=======
         int userID = (int)cmd.ExecuteScalar();
         con.Close();
         Session["customerid"] = userID.ToString();
->>>>>>> origin/master
         Response.Redirect("AddCar.aspx");
     }
 

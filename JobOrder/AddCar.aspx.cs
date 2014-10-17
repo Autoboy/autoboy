@@ -14,6 +14,7 @@ public partial class JobOrderCar_Add : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+<<<<<<< HEAD
         if (!IsPostBack)
         {
             GetUserID();
@@ -23,12 +24,35 @@ public partial class JobOrderCar_Add : System.Web.UI.Page
         }
     }
 
+=======
+        if (Session["customerid"] != null)
+        {
+            if (!IsPostBack)
+            {
+                GetUserID();
+                GetModel();
+                //txtEmail.Text = DateTime.Now.ToString("yyyy-MM-dd");
+
+            }
+        }
+        else
+            Response.Redirect("AddDetails.aspx");
+    }
+
+    
+
+>>>>>>> origin/master
     void GetUserID()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
+<<<<<<< HEAD
         cmd.CommandText = "SELECT UID, EmailAddress FROM AccountTbl";
+=======
+        cmd.CommandText = "SELECT UID, EmailAddress FROM AccountTbl WHERE UID=@UID";
+        cmd.Parameters.AddWithValue("@UID", Session["customerid"].ToString());
+>>>>>>> origin/master
         SqlDataReader dr = cmd.ExecuteReader();
         ddlAccount.DataSource = dr;
         ddlAccount.DataTextField = "EmailAddress";
@@ -69,6 +93,10 @@ public partial class JobOrderCar_Add : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         con.Close();
         
+<<<<<<< HEAD
         Response.Redirect("AddParts.aspx");
+=======
+        Response.Redirect("Default.aspx");
+>>>>>>> origin/master
     }
 }

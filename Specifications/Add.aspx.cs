@@ -19,10 +19,24 @@ public partial class Parts_Add : System.Web.UI.Page
             GetModels();
             GetSpecs();
             GetParts();
+            GetServiceType();
 
         }
     }
+    void GetServiceType()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT ServiceTypeID, ServiceType FROM ServiceTypeTbl";
+        SqlDataReader data = cmd.ExecuteReader();
+        ddlServiceType.DataSource = data;
+        ddlServiceType.DataTextField = "ServiceType";
+        ddlServiceType.DataValueField = "ServiceTypeID";
+        ddlServiceType.DataBind();
+        con.Close();
 
+    }
     void GetParts()
     {
         con.Open();
@@ -57,10 +71,11 @@ public partial class Parts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT SpecificTbl.SpecificID, ModelTbl.ModelName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
-            "FROM SpecificTbl INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID " +
-            "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
-            "WHERE SpecificTbl.PartID = 0";
+        cmd.CommandText = "SELECT spt.SpecificID, stt.ServiceType, mdt.ModelName, prt.PartName, spt.Year, spt.EstPrice, spt.EstTime " + 
+                            "FROM SpecificTbl spt INNER JOIN ModelTbl mdt ON spt.ModelID = mdt.ModelID " +
+                            "INNER JOIN PartTbl prt ON spt.PartID = prt.PartID " +
+                            "INNER JOIN ServiceTypeTbl stt ON stt.ServiceTypeID = spt.ServiceTypeID WHERE spt.PartID =@PartID";
+        cmd.Parameters.AddWithValue("@PartID", ddlPartName.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
             pnlParts.Visible = true;
@@ -77,12 +92,13 @@ public partial class Parts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO SpecificTbl VALUES (@PartID, @ModelID, @Year, @EstPrice, @EstTime)";
+        cmd.CommandText = "INSERT INTO SpecificTbl VALUES (@PartID, @ModelID, @Year, @EstPrice, @EstTime, @ServiceTypeID)";
         cmd.Parameters.AddWithValue("@PartID", ddlPartName.SelectedValue);
         cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
         cmd.Parameters.AddWithValue("@Year", txtYear.Text);
         cmd.Parameters.AddWithValue("@EstPrice", txtPrice.Text);
         cmd.Parameters.AddWithValue("@EstTime", txtTime.Text);
+        cmd.Parameters.AddWithValue("@ServiceTypeID", ddlServiceType.SelectedValue);
         cmd.ExecuteNonQuery();
         con.Close();
         Helper.AddLog("1", "Add", "Added a specification");

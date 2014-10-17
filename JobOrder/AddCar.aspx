@@ -7,6 +7,15 @@
     <form runat="server" class="form-horizontal">
         <div class="col-lg-6">
             <div class="form-group">
+<<<<<<< HEAD
+=======
+                <label class="control-label col-lg-4">User Account</label>
+                <div class="col-lg-8">
+                    <asp:DropDownList ID="ddlAccount" runat="server" class="form-control" ReadOnly="true" />
+                </div>
+            </div>
+            <div class="form-group">
+>>>>>>> origin/master
                 <label class="control-label col-lg-4">Chassis Number</label>
                 <div class="col-lg-8">
                     <asp:TextBox ID="txtChassisNo" runat="server" class="form-control" required />
@@ -30,12 +39,16 @@
                     <asp:TextBox ID="txtYear" runat="server" class="form-control" MaxLength="4" required />
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="form-group">
                 <label class="control-label col-lg-4">User Account</label>
                 <div class="col-lg-8">
                     <asp:DropDownList ID="ddlAccount" runat="server" class="form-control" />
                 </div>
             </div>
+=======
+            
+>>>>>>> origin/master
            
         </div>
         <div class="col-lg-12">

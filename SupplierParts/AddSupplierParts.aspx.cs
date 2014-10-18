@@ -62,7 +62,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
                             "FROM SpecificTbl INNER JOIN PartTbl " +
                             "ON SpecificTbl.PartID = PartTbl.PartID " +
-                            "WHERE SpecificTbl.ModelID = @ModelID";
+                            "WHERE SpecificTbl.ModelID = @ModelID AND SpecificTbl.ServiceTypeID = 2";
         cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         lvSpecView.DataSource = data;

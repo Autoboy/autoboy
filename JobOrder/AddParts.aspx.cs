@@ -266,6 +266,8 @@ public partial class SupplierParts_Add : System.Web.UI.Page
 
     protected void btnCreateJO_Click(object sender, EventArgs e)
     {
+        int EstTime = int.Parse(txtTotalEstimatedTime.Text);
+        decimal EstPrice = Decimal.Parse(txtTotalEstimatedPrice.Text);
         DateTime date = DateTime.Now;
         int TransactionNumber = GetTransactionNumber();
         con.Open();
@@ -276,11 +278,21 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
         cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedValue);
         cmd.Parameters.AddWithValue("@UID", ddlCustomer.SelectedValue);
-        cmd.Parameters.AddWithValue("@EstTime", txtTotalEstimatedTime.Text);
-        cmd.Parameters.AddWithValue("@EstCost", txtTotalEstimatedPrice.Text);
+        cmd.Parameters.AddWithValue("@EstTime", EstTime);
+        cmd.Parameters.AddWithValue("@EstCost", EstPrice);
         cmd.Parameters.AddWithValue("@OrderDate", date);
         cmd.ExecuteNonQuery();
         con.Close();
+
+        con.Open();
+            SqlCommand com = new SqlCommand();
+        com.Connection = con;
+        com.CommandText = "UPDATE TransactionTbl SET TransactionNumber = @TransactionNumber WHERE TransactionNumber = 0";
+        com.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
+        com.ExecuteNonQuery();
+        con.Close();
+
+        Response.Redirect("Default.aspx");
 
 
     }

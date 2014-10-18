@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="SupplierParts_Add"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddSupplierParts.aspx.cs" Inherits="SupplierParts_Add"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
     Manage Supplier-Part Link

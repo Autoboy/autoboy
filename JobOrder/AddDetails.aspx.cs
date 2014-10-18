@@ -24,7 +24,7 @@ public partial class JobOrderDetails_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT TypeID, UserType FROM UserTypeTbl WHERE TypeID = 3 OR TypeID = 6";
+        cmd.CommandText = "SELECT TypeID, UserType FROM UserTypeTbl WHERE TypeID = 4 OR TypeID = 5";
         SqlDataReader data = cmd.ExecuteReader();
         ddlCustomerType.DataSource = data;
         ddlCustomerType.DataTextField = "UserType";
@@ -47,6 +47,7 @@ public partial class JobOrderDetails_Add : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@LastName", txtLastName.Text);
         cmd.ExecuteNonQuery();
         con.Close();
+        con.Open();
         int userID = (int)cmd.ExecuteScalar();
         con.Close();
         Session["customerid"] = userID.ToString();

@@ -14,13 +14,7 @@ public partial class JobOrderCar_Add : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            GetUserID();
-            GetModel();
-            //txtEmail.Text = DateTime.Now.ToString("yyyy-MM-dd");
-
-        }
+       
         if (Session["customerid"] != null)
         {
             if (!IsPostBack)

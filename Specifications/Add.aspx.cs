@@ -74,8 +74,8 @@ public partial class Parts_Add : System.Web.UI.Page
         cmd.CommandText = "SELECT spt.SpecificID, stt.ServiceType, mdt.ModelName, prt.PartName, spt.Year, spt.EstPrice, spt.EstTime " + 
                             "FROM SpecificTbl spt INNER JOIN ModelTbl mdt ON spt.ModelID = mdt.ModelID " +
                             "INNER JOIN PartTbl prt ON spt.PartID = prt.PartID " +
-                            "INNER JOIN ServiceTypeTbl stt ON stt.ServiceTypeID = spt.ServiceTypeID WHERE spt.PartID =@PartID";
-        cmd.Parameters.AddWithValue("@PartID", ddlPartName.SelectedValue);
+                            "INNER JOIN ServiceTypeTbl stt ON stt.ServiceTypeID = spt.ServiceTypeID WHERE spt.ModelID =@ModelID";
+        cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
             pnlParts.Visible = true;
@@ -92,7 +92,7 @@ public partial class Parts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO SpecificTbl VALUES (@PartID, @ModelID, @Year, @EstPrice, @EstTime, @ServiceTypeID)";
+        cmd.CommandText = "INSERT INTO SpecificTbl (PartID,ModelID,Year,EstPrice,EstTime,ServiceTypeID) VALUES (@PartID, @ModelID, @Year, @EstPrice, @EstTime, @ServiceTypeID)";
         cmd.Parameters.AddWithValue("@PartID", ddlPartName.SelectedValue);
         cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
         cmd.Parameters.AddWithValue("@Year", txtYear.Text);

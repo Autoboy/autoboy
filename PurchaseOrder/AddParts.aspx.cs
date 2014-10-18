@@ -176,13 +176,13 @@ public partial class SupplierParts_Add : System.Web.UI.Page
                 con.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = "INSERT INTO ServiceTbl (SpecificID,PaintID,Description) VALUES (@SpecificID, @PaintID, @Description); " +
+                cmd.CommandText = "INSERT INTO ServiceTbl VALUES (@SpecificID, @PaintID, @Description); " +
                     "SELECT TOP 1 ServiceID FROM ServiceTbl ORDER BY ServiceID DESC;";
                 cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
                 cmd.Parameters.AddWithValue("@PaintID", DBNull.Value);
                 cmd.Parameters.AddWithValue("@Description", ddlServiceType.SelectedValue);
                 int serviceID = (int)cmd.ExecuteScalar();
-                cmd.CommandText = "INSERT INTO TransactionTbl (TransactionNumber,ServiceID) VALUES (@TransactionNumber, @ServiceID)";
+                cmd.CommandText = "INSERT INTO TransactionTbl VALUES (@TransactionNumber, @ServiceID)";
                 cmd.Parameters.AddWithValue("@TransactionNumber", 0);
                 cmd.Parameters.AddWithValue("@ServiceID", serviceID);
                 cmd.ExecuteNonQuery();

@@ -9,6 +9,7 @@
                 <thead>
                     <th>Transaction Number</th>
                     <th>Full Name</th>
+                    <th>Plate Number</th>
                     <th>Car</th>
                     <th>Date Ordered</th>
                     <th>Status</th>
@@ -21,7 +22,8 @@
                             <tr>
                                 <td><%# Eval("TransactionNumber") %></td>
                                 <td><%# Eval("FullName") %></td>
-                                <td><%# Eval("Car") %></td>
+                                <td><%# Eval("PlateNo") %></td>
+                                <td><%# Eval("ModelName")  %> <%# Eval("Year")%></td>
                                 <td><%# Eval("OrderDate") %></td>
                                 <td><%# Eval("Status") %></td>
                                 

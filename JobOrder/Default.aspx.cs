@@ -25,15 +25,16 @@ public partial class JobOrder_Default : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT     dbo.OrderTbl.TransactionNumber, dbo.AccountTbl.FirstName + ' ' + dbo.AccountTbl.LastName AS FullName, dbo.CarTbl.PlateNo, dbo.ModelTbl.ModelName + ' ' + dbo.CarTbl.Year AS Car, " +
-            "dbo.OrderTbl.OrderDate, dbo.OrderTbl.Status " +
-            "FROM dbo.AccountTbl INNER JOIN " +
-            "dbo.OrderTbl ON dbo.AccountTbl.UID = dbo.OrderTbl.UID INNER JOIN " +
-            "dbo.CarTbl ON dbo.AccountTbl.UID = dbo.CarTbl.UID INNER JOIN " +
-            "dbo.ModelTbl ON dbo.CarTbl.ModelID = dbo.ModelTbl.ModelID";
+        cmd.CommandText = "SELECT OrderTbl.OrderID, OrderTbl.TransactionNumber, AccountTbl.FirstName + ' ' + AccountTbl.LastName AS FullName, " +
+            "CarTbl.PlateNo, ModelTbl.ModelName, CarTbl.Year, " + 
+            "OrderTbl.OrderDate, OrderTbl.Status " +
+            "FROM AccountTbl INNER JOIN " +
+            "CarTbl ON AccountTbl.UID = CarTbl.UID INNER JOIN " +
+            "ModelTbl ON CarTbl.ModelID = ModelTbl.ModelID INNER JOIN " +
+            "OrderTbl ON AccountTbl.UID = OrderTbl.UID";
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
-        da.Fill(ds, "PurchaseOrderTbl");
+        da.Fill(ds, "OrderTbl");
         lvJO.DataSource = ds;
         lvJO.DataBind();
         con.Close();

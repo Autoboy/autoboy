@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Data;
 using System.Data.SqlClient;
+using System.Web.Security;
 
 public partial class Accounts_Add : System.Web.UI.Page
 {
@@ -38,6 +39,7 @@ public partial class Accounts_Add : System.Web.UI.Page
 
     protected void btnAdd_Click(object sender, EventArgs e)
     {
+        String password = Membership.GeneratePassword(12, 0);
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
@@ -45,7 +47,7 @@ public partial class Accounts_Add : System.Web.UI.Page
             "@FirstName, @LastName, @MobileNo, @Street, @Address, @City, @Status)";
         cmd.Parameters.AddWithValue("@TypeID", ddlTypes.SelectedValue);
         cmd.Parameters.AddWithValue("@EmailAddress", txtEmail.Text);
-        cmd.Parameters.AddWithValue("@Password", Helper.CreateSHAHash(txtPassword.Text));
+        cmd.Parameters.AddWithValue("@Password", password);
         cmd.Parameters.AddWithValue("@FirstName", txtFN.Text);
         cmd.Parameters.AddWithValue("@LastName", txtLN.Text);
         cmd.Parameters.AddWithValue("@MobileNo", txtMobile.Text);

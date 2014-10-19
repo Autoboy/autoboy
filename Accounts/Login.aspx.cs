@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 using System.Web.Security;
 
 
-public partial class Accounts_ChangePass : System.Web.UI.Page
+public partial class Accounts_Login : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -24,7 +24,7 @@ public partial class Accounts_ChangePass : System.Web.UI.Page
     }
 
 
-    protected void btnAdd_Click(object sender, EventArgs e)
+    protected void btnLogin_Click(object sender, EventArgs e)
     {
         //String password = Membership.GeneratePassword(12, 1);
         con.Open();
@@ -40,19 +40,9 @@ public partial class Accounts_ChangePass : System.Web.UI.Page
 
         if (data["UID"].ToString() != String.Empty)
         {
-            if (txtNPass.Text == txtRPass.Text)
-            {
-                data.Close();
-                cmd.CommandText = "UPDATE AccountTbl SET Password = @Passwrd WHERE EmailAddress = @foo";
-                cmd.Parameters.AddWithValue("@Passwrd", Helper.CreateSHAHash(txtNPass.Text));
-                cmd.Parameters.AddWithValue("@foo", txtEmail.Text);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                Session["update"] = "yes";
                 Response.Redirect("Default.aspx");
-            }
         }
-        
+
         con.Close();
     }
        

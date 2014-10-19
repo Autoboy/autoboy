@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="ChangePass.aspx.cs" Inherits="Accounts_ChangePass" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Add an Account
+    Change Password
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -25,13 +25,13 @@
             <div class="form-group">
                 <label class="control-label col-lg-4">New Password</label>
                 <div class="col-lg-6">
-                    <asp:TextBox ID="txtNPass" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:TextBox ID="txtNPass" runat="server" class="form-control" TextMode="Password" MaxLength="50" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-4">Re-type Password</label>
                 <div class="col-lg-6">
-                    <asp:TextBox ID="txtRPass" runat="server" class="form-control" MaxLength="50" required />
+                    <asp:TextBox ID="txtRPass" runat="server" class="form-control" TextMode="Password" MaxLength="50" required />
                 </div>
             </div>
 

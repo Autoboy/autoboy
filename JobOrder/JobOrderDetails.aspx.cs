@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class SupplierParts_Add : System.Web.UI.Page
+public partial class JobOrder_Details: System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -239,56 +239,27 @@ public partial class SupplierParts_Add : System.Web.UI.Page
 
     string GetTransactionNumber()
     {
-        string trannum = "";
+        string number = "";
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT TOP 1 LEFT(TransactionNumber,8) AS Number FROM TransactionTbl ORDER BY TID DESC";
+        cmd.CommandText = "SELECT TOP 1 TransactionNumber + 1 AS Number FROM TransactionTbl " +
+                            "ORDER BY TransactionNumber DESC";
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
         {
             while (data.Read())
             {
-                trannum = data["Number"].ToString();
+                number = DateTime.Now.ToString("yyyMMdd") + "0" +  data["Number"].ToString();
             }
             con.Close();
         }
         else
         {
             con.Close();
-            trannum = "0";
+            number = DateTime.Now.ToString("yyyMMdd") + "01";
         }
-        if (trannum == DateTime.Now.ToString("yyyyMMdd"))
-        {
-            con.Open();
-            SqlCommand command = new SqlCommand();
-            command.Connection = con;
-            command.CommandText = "SELECT TransactionNumber AS Number FROM TransactionTbl " +
-                                  "ORDER BY TransactionNumber DESC";
-        }
-        
-        //string tramnum = (DateTime.Now + "01").ToString();
-        //string number = "";
-        //con.Open();
-        //SqlCommand cmd = new SqlCommand();
-        //cmd.Connection = con;
-        //cmd.CommandText = "SELECT TransactionNumber AS Number FROM TransactionTbl " +
-        //                    "ORDER BY TransactionNumber DESC";
-        //SqlDataReader data = cmd.ExecuteReader();
-        //if (data.HasRows)
-        //{
-        //    while (data.Read())
-        //    {
-        //        number = DateTime.Now.ToString("yyyMMdd") + "0" +  data["Number"].ToString();
-        //    }
-        //    con.Close();
-        //}
-        //else
-        //{
-        //    con.Close();
-        //    number = DateTime.Now.ToString("yyyMMdd") + "01";
-        //}
-        //return number;
+        return number;
     }
 
     protected void btnCreateJO_Click(object sender, EventArgs e)

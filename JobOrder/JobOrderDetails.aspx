@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="AddParts.aspx.cs" Inherits="SupplierParts_Add"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="JobOrderDetails.aspx.cs" Inherits="JobOrder_Details"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Create Job Order
+    Viewing Job Order
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -18,18 +18,6 @@
                 <label class="control-label col-lg-3">Car Model:</label>
                 <div class="col-lg-8">
                     <asp:DropDownList ID="ddlCar" runat="server" class="form-control" ReadOnly="true"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Chassis No:</label>
-                <div class="col-lg-8">
-                    <asp:DropDownList ID="ddlChassisNo" runat="server" class="form-control" ReadOnly="true"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Service Type:</label>
-                <div class="col-lg-8">
-                    <asp:DropDownList ID="ddlServiceType" runat="server" class="form-control" OnSelectedIndexChanged="ddlServiceType_SelectedIndexChanged" AutoPostBack="true" />
                 </div>
             </div>
             <h4>Select Parts</h4>

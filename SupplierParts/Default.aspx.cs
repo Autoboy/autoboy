@@ -14,50 +14,50 @@ public partial class SupplierParts_Default : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-    //    if (Session["add"] != null)
-    //    {
-    //        add.Visible = true;
-    //        Session.Remove("add");
-    //    }
-    //    else if (Session["update"] != null)
-    //    {
-    //        update.Visible = true;
-    //        Session.Remove("update");
-    //    }
-    //    else if (Session["delete"] != null)
-    //    {
-    //        delete.Visible = true;
-    //        Session.Remove("delete");
-    //    }
-    //    else
-    //    {
-    //        add.Visible = false;
-    //        update.Visible = false;
-    //        delete.Visible = false;
-    //    }
+        if (Session["add"] != null)
+        {
+            add.Visible = true;
+            Session.Remove("add");
+        }
+        else if (Session["update"] != null)
+        {
+            update.Visible = true;
+            Session.Remove("update");
+        }
+        else if (Session["delete"] != null)
+        {
+            delete.Visible = true;
+            Session.Remove("delete");
+        }
+        else
+        {
+            add.Visible = false;
+            update.Visible = false;
+            delete.Visible = false;
+        }
 
-    //    if (!IsPostBack)
-    //    {
-    //        GetSpecific();
-    //    }
+        if (!IsPostBack)
+        {
+            GetSpecific();
+        }
     }
 
-    //void GetSpecific()
-    //{
-    //    con.Open();
-    //    SqlCommand cmd = new SqlCommand();
-    //    cmd.Connection = con;
-    //    cmd.CommandText = "SELECT SpecificTbl.SpecificID, PartTbl.PartName, ModelTbl.ModelName, SpecificTbl.[Year], " +
-    //    "SpecificTbl.EstPrice, SpecificTbl.EstTime FROM SpecificTbl " +
-    //    "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
-    //    "INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID";
-    //    SqlDataAdapter da = new SqlDataAdapter(cmd);
-    //    DataSet ds = new DataSet();
-    //    da.Fill(ds, "SpecificTbl");
-    //    lvSpecific.DataSource = ds;
-    //    lvSpecific.DataBind();
-    //    con.Close();
-    //}
+    void GetSpecific()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SpecificTbl.SpecificID, PartTbl.PartName, ModelTbl.ModelName, SpecificTbl.[Year], " +
+        "SpecificTbl.EstPrice, SpecificTbl.EstTime FROM SpecificTbl " +
+        "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
+        "INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID";
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        DataSet ds = new DataSet();
+        da.Fill(ds, "SpecificTbl");
+        lvSpecific.DataSource = ds;
+        lvSpecific.DataBind();
+        con.Close();
+    }
 
     //void GetAccounts(string keyword)
     //{

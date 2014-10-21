@@ -21,6 +21,8 @@ public partial class SupplierParts_Add : System.Web.UI.Page
             GetSpecs();
             GetSupplierPart2();
 
+            
+
         }
     }
 

@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Data.SqlClient;
 
-public partial class PurchaseOrder_Delete : System.Web.UI.Page
+public partial class BookOnline_Delete : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 

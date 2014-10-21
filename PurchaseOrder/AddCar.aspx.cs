@@ -8,27 +8,35 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class Car_Add : System.Web.UI.Page
+public partial class JobOrderCar_Add : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
+       
+        if (Session["customerid"] != null)
         {
-            GetUserID();
-            GetModel();
-            //txtEmail.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            if (!IsPostBack)
+            {
+                GetUserID();
+                GetModel();
+                //txtEmail.Text = DateTime.Now.ToString("yyyy-MM-dd");
 
+            }
         }
+        else
+            Response.Redirect("AddDetails.aspx");
     }
 
+    
     void GetUserID()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT UID, EmailAddress FROM AccountTbl";
+        cmd.CommandText = "SELECT UID, EmailAddress FROM AccountTbl WHERE UID=@UID";
+        cmd.Parameters.AddWithValue("@UID", Session["customerid"].ToString());
         SqlDataReader dr = cmd.ExecuteReader();
         ddlAccount.DataSource = dr;
         ddlAccount.DataTextField = "EmailAddress";
@@ -68,7 +76,7 @@ public partial class Car_Add : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Status", "Active");
         cmd.ExecuteNonQuery();
         con.Close();
-        Session["add"] = "yes";
-        Response.Redirect("Default.aspx");
+        Response.Redirect("AddParts.aspx");
+
     }
 }

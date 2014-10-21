@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class PurchaseOrder_Default : System.Web.UI.Page
+public partial class JobOrder_Default : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -16,26 +16,27 @@ public partial class PurchaseOrder_Default : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            GetPurchaseOrder();
+            GetJO();
         }
     }
 
-    void GetPurchaseOrder()
+    void GetJO()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT DISTINCT PurchaseOrderTbl.PONumber, PurchaseOrderTbl.Date, SupplierTbl.Supplier " +
-             "FROM PurchaseOrderTbl INNER JOIN " +
-             "SupplierTbl ON PurchaseOrderTbl.SupplierID = SupplierTbl.SupplierID INNER JOIN " +
-             "SpecificTbl ON PurchaseOrderTbl.SpecificID = SpecificTbl.SpecificID INNER JOIN " +
-             "ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID INNER JOIN " +
-             "PartTbl ON SpecificTbl.PartID = PartTbl.PartID";
+        cmd.CommandText = "SELECT OrderTbl.OrderID, OrderTbl.TransactionNumber, AccountTbl.FirstName + ' ' + AccountTbl.LastName AS FullName, " +
+            "CarTbl.PlateNo, ModelTbl.ModelName, CarTbl.Year, " + 
+            "OrderTbl.OrderDate, OrderTbl.Status " +
+            "FROM AccountTbl INNER JOIN " +
+            "CarTbl ON AccountTbl.UID = CarTbl.UID INNER JOIN " +
+            "ModelTbl ON CarTbl.ModelID = ModelTbl.ModelID INNER JOIN " +
+            "OrderTbl ON AccountTbl.UID = OrderTbl.UID";
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
-        da.Fill(ds, "PurchaseOrderTbl");
-        lvCars.DataSource = ds;
-        lvCars.DataBind();
+        da.Fill(ds, "OrderTbl");
+        lvJO.DataSource = ds;
+        lvJO.DataBind();
         con.Close();
     }
     

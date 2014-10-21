@@ -36,7 +36,6 @@
                     <asp:TextBox ID="txtYear" runat="server" class="form-control" MaxLength="4" required />
                 </div>
             </div>
-            
            
         </div>
         <div class="col-lg-12">

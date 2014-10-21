@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class InsuranceDocs_Details : System.Web.UI.Page
+public partial class Accounts_Details : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -16,15 +16,15 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
     {
         if (Request.QueryString["ID"] != null)
         {
-            int UID = 0;
-            bool validUser = int.TryParse(Request.QueryString["ID"].ToString(), out UID);
+            int userID = 0;
+            bool validUser = int.TryParse(Request.QueryString["ID"].ToString(), out userID);
 
             if (validUser)
             {
                 if (!IsPostBack)
                 {
-                    GetInsurance(UID);
-                    
+                    GetUserTypes();
+                    GetInfo(userID);
                 }
             }
             else
@@ -32,24 +32,9 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
         }
         else
             Response.Redirect("Default.aspx");
-
     }
 
-    /*void GetLiteral()
-    {
-        con.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandText = "SELECT UID FROM InsuranceDocumentTbl ";
-        SqlDataReader dr = cmd.ExecuteReader();
-        ddlTypes.DataSource = dr;
-        ddlTypes.DataTextField = "UserType";
-        ddlTypes.DataValueField = "TypeID";
-        ddlTypes.DataBind();
-        con.Close();
-    }*/
-
-    /*void GetUserTypes()
+    void GetUserTypes()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
@@ -61,60 +46,74 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
         ddlTypes.DataValueField = "TypeID";
         ddlTypes.DataBind();
         con.Close();
-    }*/
+    }
 
-    void GetInsurance(int UID)
+    void GetInfo(int ID)
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT InsuranceDocID, UID, License, PicLicense, ORCR, PicORCR, " +
-            "Affidavit, PicAffidavit, DateSubmitted, DateModified, Photos, " + 
-            "Photo1, Photo2, Photo3, Status FROM InsuranceDocumentTbl WHERE UID=@UID";
-        cmd.Parameters.AddWithValue("@UID", UID);
+        cmd.CommandText = "SELECT UID, TypeID, EmailAddress, FirstName, LastName, Street, " +
+            "Address, City, MobileNo, Status FROM AccountTbl WHERE UID=@UID";
+        cmd.Parameters.AddWithValue("@UID", ID);
         SqlDataReader dr = cmd.ExecuteReader();
         if (dr.HasRows)
         {
             while (dr.Read())
             {
-                
-                hlkLicense.NavigateUrl = "~/Images/InsuranceDocs/License/" + dr["PicLicense"].ToString();
-                
-                hlkORCR.NavigateUrl = "~/Images/InsuranceDocs/ORCR/" + dr["PicORCR"].ToString();
-                
-                hlkAffidavit.NavigateUrl = "~/Images/InsuranceDocs/Affidavit/" + dr["PicAffidavit"].ToString();
-                hlkPhoto1.NavigateUrl = "~/Images/InsuranceDocs/Photos/" + dr["Photo1"].ToString();
-                hlkPhoto1.NavigateUrl = "~/Images/InsuranceDocs/Photos/" + dr["Photo2"].ToString();
-                hlkPhoto1.NavigateUrl = "~/Images/InsuranceDocs/Photos/" + dr["Photo3"].ToString();
+                ltID.Text = dr["UID"].ToString();
+                ddlStatus.SelectedValue = dr["Status"].ToString();
+                ddlTypes.SelectedValue = dr["TypeID"].ToString();
+                txtEmail.Text = dr["EmailAddress"].ToString();
+                txtFN.Text = dr["FirstName"].ToString();
+                txtLN.Text = dr["LastName"].ToString();
+                txtStreet.Text = dr["Street"].ToString();
+                txtAddress.Text = dr["Address"].ToString();
+                txtCity.Text = dr["City"].ToString();
+                txtMobile.Text = dr["MobileNo"].ToString();
             }
             con.Close();
         }
         else
         {
-           con.Close();
-           Response.Redirect("Default.aspx");
+            con.Close();
+            Response.Redirect("Default.aspx");
         }
     }
-    protected void cbORCR_CheckedChanged(object sender, EventArgs e)
+
+    protected void btnUpdate_Click(object sender, EventArgs e)
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "Update InsuranceDocumentTbl Set ORCR = 'yes' WHERE UID=@UID";
+        if (txtPassword.Text == "")
+        {
+            cmd.CommandText = "UPDATE AccountTbl SET TypeID=@TypeID, EmailAddress=@EmailAddress, " +
+                "FirstName=@FirstName, LastName=@LastName, Street=@Street, " +
+                "Address=@Address, City=@City, MobileNo=@MobileNo, Status=@Status " +
+                "WHERE UID=@UID";
+        }
+        else
+        {
+            cmd.CommandText = "UPDATE AccountTbl SET TypeID=@TypeID, EmailAddress=@EmailAddress, Password=@Password, " +
+                "FirstName=@FirstName, LastName=@LastName, Street=@Street, " +
+                "Address=@Address, City=@City, MobileNo=@MobileNo, Status=@Status " +
+                "WHERE UID=@UID";
+        }
+        cmd.Parameters.AddWithValue("@TypeID", ddlTypes.SelectedValue);
+        cmd.Parameters.AddWithValue("@EmailAddress", txtEmail.Text);
+        cmd.Parameters.AddWithValue("@Password", Helper.CreateSHAHash(txtPassword.Text));
+        cmd.Parameters.AddWithValue("@FirstName", txtFN.Text);
+        cmd.Parameters.AddWithValue("@LastName", txtLN.Text);
+        cmd.Parameters.AddWithValue("@Street", txtStreet.Text);
+        cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
+        cmd.Parameters.AddWithValue("@City", txtCity.Text);
+        cmd.Parameters.AddWithValue("@MobileNo", txtMobile.Text);
+        cmd.Parameters.AddWithValue("@Status", ddlStatus.SelectedValue);
         cmd.Parameters.AddWithValue("@UID", Request.QueryString["ID"].ToString());
-        SqlDataReader dr = cmd.ExecuteReader();
+        cmd.ExecuteNonQuery();
         con.Close();
-    }
-    protected void cbInsurance_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void cbAffidavit_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void cbPhotos_CheckedChanged(object sender, EventArgs e)
-    {
-
+        Session["update"] = "yes";
+        Response.Redirect("Default.aspx");
     }
 }

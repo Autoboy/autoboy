@@ -19,25 +19,13 @@ public partial class SupplierParts_Add : System.Web.UI.Page
             GetModels();
             GetSuppliers();
             GetSpecs();
-            GetSupplierPart();
-            GetUserType();
+            GetSupplierPart2();
 
+            
 
         }
     }
-    void GetUserType()
-    {
-        con.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandText = "SELECT TypeID, UserType FROM UserTypeTbl WHERE TypeID = 3 OR TypeID = 6";
-        SqlDataReader data = cmd.ExecuteReader();
-        ddlCustomerType.DataSource = data;
-        ddlCustomerType.DataTextField = "UserType";
-        ddlCustomerType.DataValueField = "TypeID";
-        ddlCustomerType.DataBind();
-        con.Close();
-    }
+
     
     void GetSuppliers()
     {
@@ -76,7 +64,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
                             "FROM SpecificTbl INNER JOIN PartTbl " +
                             "ON SpecificTbl.PartID = PartTbl.PartID " +
-                            "WHERE SpecificTbl.ModelID = @ModelID";
+                            "WHERE SpecificTbl.ModelID = @ModelID AND SpecificTbl.ServiceTypeID = 2";
         cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         lvSpecView.DataSource = data;
@@ -84,17 +72,35 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Close();
     }
 
-    
-
     void GetSupplierPart()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SpecificTbl.SpecificId, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " +
+                          "FROM SpecificTbl INNER JOIN PartTbl " +
+                          "ON SpecificTbl.PartID = PartTbl.PartID " +
+                          "INNER JOIN SupplierPartsTbl " +
+                          "ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
+                          "WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+        SqlDataReader data = cmd.ExecuteReader();
+        lvSupplierPart.DataSource = data;
+        lvSupplierPart.DataBind();
+        con.Close();
+
+
+    }
+
+    void GetSupplierPart2()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
         cmd.CommandText = "SELECT SupplierPartsTbl.RefID, PartTbl.PartID, PartTbl.PartName, SpecificTbl.Year, SpecificTbl.EstPrice, SpecificTbl.EstTime " + 
                           "FROM SupplierPartsTbl INNER JOIN SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " + 
-                          "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID WHERE SpecificTbl.ModelID = @ModelID";
-        cmd.Parameters.AddWithValue("@ModelID", ddlModels.SelectedValue);
+                          "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         lvSupplierPart.DataSource = data;
         lvSupplierPart.DataBind();
@@ -159,7 +165,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
             Response.Redirect("Default.aspx");
         }
         GetSpecs();
-        GetSupplierPart();
+        GetSupplierPart2();
     }
 
     protected void lvSpecs_ItemCommand(object sender, ListViewCommandEventArgs e)
@@ -188,11 +194,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        GetSupplierPart();
+        GetSupplierPart2();
         
-    }
-    protected void lvSpecView_DataBound(object sender, EventArgs e)
-    {
-         
     }
 }

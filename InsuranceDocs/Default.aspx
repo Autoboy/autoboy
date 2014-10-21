@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="InsuranceDocs_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
@@ -7,7 +7,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
         <asp:ScriptManager runat="server"></asp:ScriptManager>
-=======
+
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Accounts_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
@@ -15,7 +15,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
->>>>>>> origin/master
+
         <div class="col-lg-12">
             <div id="add" runat="server" class="alert alert-success" visible="false">
                 Record added.
@@ -45,20 +45,20 @@
             </div>
             <div id="status" runat="server" class="col-lg-4" visible="false">
                 <asp:DropDownList ID="ddlStatus" runat="server" class="form-control"
-<<<<<<< HEAD
+
                     OnSelectedIndexChanged="ddlStatus_SelectedIndexChanged1" AutoPostBack="true">
                     <asp:ListItem>Read</asp:ListItem>
                     <asp:ListItem>Unread</asp:ListItem>
-=======
+
                     OnSelectedIndexChanged="ddlStatus_SelectedIndexChanged" AutoPostBack="true">
                     <asp:ListItem>Active</asp:ListItem>
                     <asp:ListItem>Inactive</asp:ListItem>
->>>>>>> origin/master
+
                     <asp:ListItem>Blocked</asp:ListItem>
                 </asp:DropDownList>
             </div>
             <br /><br />
-<<<<<<< HEAD
+
             <asp:UpdatePanel ID="upInsuranceDocs" runat="server">
                 <ContentTemplate>
                     <table class="table table-hover">
@@ -105,7 +105,7 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
             
-=======
+
             <table class="table table-hover">
                 <thead>
                     <th>#</th>
@@ -144,7 +144,7 @@
                     </asp:ListView>
                 </tbody>
             </table>
->>>>>>> origin/master
+
         </div>
     </form>
 </asp:Content>

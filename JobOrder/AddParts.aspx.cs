@@ -244,15 +244,14 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT TransactionNumber + 1 AS Number FROM TransactionTbl " +
-                            "WHERE TransactionNumber = 0";
+        cmd.CommandText = "SELECT TOP 1 TransactionNumber + 1 AS Number FROM TransactionTbl " +
+                            "ORDER BY TransactionNumber DESC";
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
         {
             while (data.Read())
             {
-                number = int.Parse(data["Number"].ToString());
-                number = int.Parse(DateTime.Now.ToString("yyyMMdd") + "01");
+                number = DateTime.Now.ToString("yyyMMdd") + "0" +  data["Number"].ToString();
             }
             con.Close();
         }

@@ -36,14 +36,20 @@ public partial class Accounts_Login : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Password", Helper.CreateSHAHash(txtPass.Text));
         SqlDataReader data = cmd.ExecuteReader();
 
-        data.Read();
-
-        if (data["UID"].ToString() != String.Empty)
+        if (data.HasRows)
         {
-                Response.Redirect("Default.aspx");
+            while (data.Read())
+            {
+                Session["UID"] = data["UID"].ToString();
+                Session["TypeID"] = data["TypeID"].ToString();
+            }
+            con.Close();
+            Response.Redirect("~/Accounts/Default.aspx");
         }
-
-        con.Close();
+        else
+        {
+            con.Close();
+        }
     }
        
         

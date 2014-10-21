@@ -36,24 +36,33 @@ public partial class Accounts_ChangePass : System.Web.UI.Page
         cmd.Parameters.AddWithValue("@Password", Helper.CreateSHAHash(txtPass.Text));
         SqlDataReader data = cmd.ExecuteReader();
 
-        data.Read();
-
-        if (data["UID"].ToString() != String.Empty)
+        if (data.HasRows)
         {
-            if (txtNPass.Text == txtRPass.Text)
+            while (data.Read()) ;
             {
-                data.Close();
-                cmd.CommandText = "UPDATE AccountTbl SET Password = @Passwrd WHERE EmailAddress = @foo";
-                cmd.Parameters.AddWithValue("@Passwrd", Helper.CreateSHAHash(txtNPass.Text));
-                cmd.Parameters.AddWithValue("@foo", txtEmail.Text);
-                cmd.ExecuteNonQuery();
-                con.Close();
-                Session["update"] = "yes";
-                Response.Redirect("Default.aspx");
+                if (data["UID"].ToString() != String.Empty)
+                {
+                    if (txtNPass.Text == txtRPass.Text)
+                    {
+                        data.Close();
+                        cmd.CommandText = "UPDATE AccountTbl SET Password = @Passwrd WHERE EmailAddress = @foo";
+                        cmd.Parameters.AddWithValue("@Passwrd", Helper.CreateSHAHash(txtNPass.Text));
+                        cmd.Parameters.AddWithValue("@foo", txtEmail.Text);
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                        Session["update"] = "yes";
+                        Response.Redirect("Default.aspx");
+                    }
+                    con.Close();
+                    Response.Redirect("~/Accounts/Default.aspx");
+                }
             }
         }
         
-        con.Close();
+        else
+        {
+            con.Close();
+        }
     }
        
         

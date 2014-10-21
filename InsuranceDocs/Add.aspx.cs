@@ -8,11 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-<<<<<<< HEAD
 public partial class InsuranceDocs_Add : System.Web.UI.Page
-=======
-public partial class Accounts_Add : System.Web.UI.Page
->>>>>>> origin/master
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -20,27 +16,18 @@ public partial class Accounts_Add : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-<<<<<<< HEAD
             //GetUserID();
             //GetModel();
-=======
-            GetUserTypes();
->>>>>>> origin/master
             //txtEmail.Text = DateTime.Now.ToString("yyyy-MM-dd");
 
         }
     }
 
-<<<<<<< HEAD
     protected void btnAdd_Click(object sender, EventArgs e)
-=======
-    void GetUserTypes()
->>>>>>> origin/master
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-<<<<<<< HEAD
         cmd.CommandText = "INSERT INTO InsuranceDocumentTbl VALUES (@UID, @License, @PicLicense, " +
             "@ORCR, @PicORCR, @Affidavit, @PicAffidavit, @DateSubmitted, @DateModified, " +
             "@Photos, @Photo1, @Photo2, @Photo3, @Status)";
@@ -118,34 +105,6 @@ public partial class Accounts_Add : System.Web.UI.Page
 
         cmd.Parameters.AddWithValue("@Status", "Incomplete");
 
-=======
-        cmd.CommandText = "SELECT TypeID, UserType FROM UserTypeTbl";
-        SqlDataReader dr = cmd.ExecuteReader();
-        ddlTypes.DataSource = dr;
-        ddlTypes.DataTextField = "UserType";
-        ddlTypes.DataValueField = "TypeID";
-        ddlTypes.DataBind();
-        con.Close();
-    }
-
-    protected void btnAdd_Click(object sender, EventArgs e)
-    {
-        con.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO AccountTbl VALUES (@EmailAddress, @Password, @TypeID, " +
-            "@FirstName, @LastName, @MobileNo, @Street, @Address, @City, @Status)";
-        cmd.Parameters.AddWithValue("@TypeID", ddlTypes.SelectedValue);
-        cmd.Parameters.AddWithValue("@EmailAddress", txtEmail.Text);
-        cmd.Parameters.AddWithValue("@Password", Helper.CreateSHAHash(txtPassword.Text));
-        cmd.Parameters.AddWithValue("@FirstName", txtFN.Text);
-        cmd.Parameters.AddWithValue("@LastName", txtLN.Text);
-        cmd.Parameters.AddWithValue("@MobileNo", txtMobile.Text);
-        cmd.Parameters.AddWithValue("@Street", txtStreet.Text);
-        cmd.Parameters.AddWithValue("@Address", txtAddress.Text);
-        cmd.Parameters.AddWithValue("@City", txtCity.Text);
-        cmd.Parameters.AddWithValue("@Status", "Active");
->>>>>>> origin/master
         cmd.ExecuteNonQuery();
         con.Close();
         Session["add"] = "yes";

@@ -116,9 +116,9 @@
                 <div class="col-lg-3">
                     <asp:TextBox ID="txtTotalEstimatedPrice" runat="server" class="form-control"  MaxLength="80" Enabled="false"/>
                 </div>
-                <label class="control-label col-lg-7">Transaction Number</label>
+                <label class="control-label col-lg-7">Ito yung Tran Num</label>
                 <div class="col-lg-3">
-                    <asp:TextBox ID="txtTransactionNumber" runat="server" class="form-control"  MaxLength="80" Enabled="false"/>
+                    <asp:TextBox ID="TextBox1" runat="server" class="form-control"  MaxLength="80" Enabled="false"/>
                 </div>
                 
             </div>

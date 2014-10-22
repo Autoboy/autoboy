@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="JobOrderDetails.aspx.cs" Inherits="JobOrder_Details"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
     Viewing Job Order
@@ -14,12 +14,7 @@
                     <asp:DropDownList ID="ddlCustomer" runat="server" class="form-control" ReadOnly="true"/>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Car Model:</label>
-                <div class="col-lg-8">
-                    <asp:DropDownList ID="ddlCar" runat="server" class="form-control" ReadOnly="true"/>
-                </div>
-            </div>
+            
             <h4>Select Parts</h4>
 
                     <table  class="table table-hover">
@@ -29,7 +24,7 @@
                             <th>Estimated Time</th>
                         </thead>
                         <tbody>
-                            <asp:ListView ID="lvCarParts" runat="server" OnItemCommand="lvCarParts_ItemCommand">
+                            <asp:ListView ID="lvCarParts" runat="server" >
                                 <ItemTemplate>
                                     <tr>
                                 
@@ -58,13 +53,20 @@
                 
               
             </asp:Panel>
+            
         </div>
             
         <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-lg-3">Car Model:</label>
+                <div class="col-lg-8">
+                    <asp:DropDownList ID="txtCarModel" runat="server" class="form-control" ReadOnly="true"/>
+                </div>
+            </div>
             <div id="error" runat="server" class="alert alert-danger" visible="false">
                 Part is already existing.
             </div>
-            <h3>Parts to be Added to: </h3>
+            <h4>Parts to be Added to: </h4>
             <table  class="table table-hover">
                 <thead>
                     <th>Service Type</th>
@@ -74,7 +76,7 @@
                     <th></th>
                 </thead>
                 <tbody>
-                    <asp:ListView ID="lvJobOrderParts" runat="server" OnItemCommand="lvJobOrderParts_ItemCommand" >
+                    <asp:ListView ID="lvJobOrderParts" runat="server" >
                         <ItemTemplate>
                             <tr>
                                 <td><%# Eval("ServiceType") %><asp:Literal id="ltServiceID" runat="server" Text='<%# Eval("ServiceID") %>' Visible="false" /></td>
@@ -112,7 +114,7 @@
             </div>
             <div class="col-lg-10">
                 <span class="pull-right">
-                    <asp:Button ID="btnCreateJO" runat="server" class="btn btn-success" Text="Create Job Order" OnClick="btnCreateJO_Click"/>
+                    <asp:Button ID="btnCreateJO" runat="server" class="btn btn-success" Text="Create Job Order" />
                     <asp:Button ID="btnCancelJO" runat="server" class="btn btn-default" Text="Cancel" />
                 </span>
              </div>

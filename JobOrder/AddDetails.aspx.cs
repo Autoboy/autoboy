@@ -38,9 +38,7 @@ public partial class JobOrderDetails_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO AccountTbl (EmailAddress,TypeID,FirstName,LastName) VALUES (@EmailAddress,@TypeID,@FirstName,@LastName)";
-        cmd.CommandText = "INSERT INTO AccountTbl (EmailAddress,TypeID,FirstName,LastName) VALUES (@EmailAddress,@TypeID,@FirstName,@LastName); " +
-            "SELECT TOP 1 UID FROM AccountTbl ORDER BY UID DESC;";
+        cmd.CommandText = "INSERT INTO AccountTbl (EmailAddress,TypeID,FirstName,LastName) VALUES (@EmailAddress,@TypeID,@FirstName,@LastName);";
         cmd.Parameters.AddWithValue("@EmailAddress",txtEmail.Text);
         cmd.Parameters.AddWithValue("@TypeID", ddlCustomerType.SelectedValue);
         cmd.Parameters.AddWithValue("@FirstName", txtFirstName.Text);
@@ -48,7 +46,10 @@ public partial class JobOrderDetails_Add : System.Web.UI.Page
         cmd.ExecuteNonQuery();
         con.Close();
         con.Open();
-        int userID = (int)cmd.ExecuteScalar();
+        SqlCommand com = new SqlCommand();
+        com.Connection = con;
+        com.CommandText = "SELECT TOP 1 UID FROM AccountTbl ORDER BY UID DESC;";
+        int userID = (int)com.ExecuteScalar();
         con.Close();
         Session["customerid"] = userID.ToString();
         Response.Redirect("AddCar.aspx");

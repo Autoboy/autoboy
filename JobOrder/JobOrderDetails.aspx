@@ -15,59 +15,9 @@
                 </div>
             </div>
             
-            <h4>Select Parts</h4>
+            <h4>Job Order Parts</h4>
 
-                    <table  class="table table-hover">
-                        <thead>
-                            <th>Part Name</th>
-                            <th>Estimated Price</th>
-                            <th>Estimated Time</th>
-                        </thead>
-                        <tbody>
-                            <asp:ListView ID="lvCarParts" runat="server" >
-                                <ItemTemplate>
-                                    <tr>
-                                
-                                        <td>
-                                            <asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("SpecificID") %>' Visible="false" />
-                                            <%# Eval("PartName") %></td>
-                                        <td><asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" type="number"
-                                            min="1.00" max="1000000.00" step="0.01" Text='<%# Eval("EstPrice") %>' /></td>
-                                        <td><%# Eval("EstTime") %></td></td>
-                                        <td><asp:LinkButton ID="btnAddLink" runat="server" CommandName="addLink"><i class="fa fa-plus-circle"></i></asp:LinkButton></td>
-                                    </tr>
-                                </ItemTemplate>
-                                <EmptyDataTemplate>
-                                    <tr>
-                                        <td colspan="5">
-                                            <h2 class="text-center">No records found.</h2>
-                                        </td>
-                                    </tr>
-                                </EmptyDataTemplate>
-                            </asp:ListView>
-                        </tbody>
-                    </table>
-
-             
-            <asp:Panel ID="pnlParts" runat="server" Visible="false">
-                
-              
-            </asp:Panel>
-            
-        </div>
-            
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label class="control-label col-lg-3">Car Model:</label>
-                <div class="col-lg-8">
-                    <asp:DropDownList ID="txtCarModel" runat="server" class="form-control" ReadOnly="true"/>
-                </div>
-            </div>
-            <div id="error" runat="server" class="alert alert-danger" visible="false">
-                Part is already existing.
-            </div>
-            <h4>Parts to be Added to: </h4>
-            <table  class="table table-hover">
+      <table  class="table table-hover">
                 <thead>
                     <th>Service Type</th>
                     <th>Part Name</th>    
@@ -75,7 +25,7 @@
                     <th>Estimated Time</th>
                     <th></th>
                 </thead>
-                <tbody>
+                <tbod>yse
                     <asp:ListView ID="lvJobOrderParts" runat="server" >
                         <ItemTemplate>
                             <tr>
@@ -97,6 +47,27 @@
                     </asp:ListView>
                 </tbody>
             </table>
+
+             
+            <asp:Panel ID="pnlParts" runat="server" Visible="false">
+                
+              
+            </asp:Panel>
+            
+        </div>
+            
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="control-label col-lg-3">Car Model:</label>
+                <div class="col-lg-8">
+                    <asp:DropDownList ID="txtCarModel" runat="server" class="form-control" ReadOnly="true"/>
+                </div>
+            </div>
+            <div id="error" runat="server" class="alert alert-danger" visible="false">
+                Part is already existing.
+            </div>
+            
+            
             <div class="form-group">
                 <label class="control-label col-lg-7">Estimated Time</label>
                 <div class="col-lg-3">

@@ -28,7 +28,7 @@
                                 <td><%# Eval("Status") %></td>
                                 
                                 <td>
-                                    <a href='Details.aspx?JOID=<%# Eval("OrderID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    <a href='JobOrderDetails.aspx?JOID=<%# Eval("OrderID") %>'><i class="fa fa-search"></i></a>&nbsp;
                                     <%--<a href='Delete.aspx?ID=<%# Eval("POID") %>' onclick='return confirm("Delete record?")'>--%>
                                         <%--<i class="fa fa-trash-o"></i>--%>
                                     </a>

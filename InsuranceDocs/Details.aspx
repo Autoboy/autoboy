@@ -11,7 +11,7 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <div class="control-label col-lg-8">
-                            <h4><asp:CheckBox ID="cbLicense" runat="server" Text="License and Official Receipt&nbsp" TextAlign="Left" OnCheckedChanged="cbInsurance_CheckedChanged" /></h4>
+                            <h4><asp:CheckBox ID="cbLicense" runat="server" Text="License and Official Receipt&nbsp" TextAlign="Left" OnCheckedChanged="UpdateChecklist" AutoPostBack="true" /></h4>
                             <asp:Literal ID="litLicense" runat="server" Visible="false"></asp:Literal>
                             <div id="picInsurance" runat="server" class="form-group">
                                 <div class="col-lg-12">
@@ -20,7 +20,7 @@
                             </div>
                         </div>
                         <div class="control-label col-lg-8">
-                            <h4><asp:CheckBox ID="cbORCR" runat="server" Text="ORCR&nbsp" TextAlign="Left" OnCheckedChanged="cbORCR_CheckedChanged" /></h4>
+                            <h4><asp:CheckBox ID="cbORCR" runat="server" Text="ORCR&nbsp" TextAlign="Left" OnCheckedChanged="UpdateChecklist" AutoPostBack="true" /></h4>
                             <div id="picORCR" runat="server" class="form-group">
                                 <div class="col-lg-12">
                                     <asp:HyperLink ID="hlkORCR" runat="server" Target="_blank" class="btn btn-info" Text="View Document" />
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         <div class="control-label col-lg-8">
-                            <h4><asp:CheckBox ID="cbAffidavit" runat="server" Text="Letter of Affidavit&nbsp" TextAlign="Left" OnCheckedChanged="cbAffidavit_CheckedChanged" /></h4>
+                            <h4><asp:CheckBox ID="cbAffidavit" runat="server" Text="Letter of Affidavit&nbsp" TextAlign="Left" OnCheckedChanged="UpdateChecklist" AutoPostBack="true" /></h4>
                             <div id="picAffidavit" runat="server" class="form-group">
                                 <div class="col-lg-12">
                                     <asp:HyperLink ID="hlkAffidavit" runat="server" Target="_blank" class="btn btn-info" Text="View Document" />
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="control-label col-lg-8">
-                            <h4><asp:CheckBox ID="cbPhotos" runat="server" Text="Photos of Damage&nbsp" TextAlign="Left" OnCheckedChanged="cbPhotos_CheckedChanged" /></h4>
+                            <h4><asp:CheckBox ID="cbPhotos" runat="server" Text="Photos of Damage&nbsp" TextAlign="Left" OnCheckedChanged="UpdateChecklist" AutoPostBack="true" /></h4>
                             <div id="picPhotos" runat="server" class="form-group">
                                 <div class="col-lg-12">
                                     <asp:HyperLink ID="hlkPhoto1" runat="server" Target="_blank" class="btn btn-info" Text="View Photo 1" />

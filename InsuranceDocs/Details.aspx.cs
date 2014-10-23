@@ -23,8 +23,7 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
             {
                 if (!IsPostBack)
                 {
-                    GetInsurance(UID);
-                    
+                    GetInsurance(UID);                    
                 }
             }
             else
@@ -49,20 +48,6 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
         con.Close();
     }*/
 
-    /*void GetUserTypes()
-    {
-        con.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandText = "SELECT TypeID, UserType FROM UserTypeTbl";
-        SqlDataReader dr = cmd.ExecuteReader();
-        ddlTypes.DataSource = dr;
-        ddlTypes.DataTextField = "UserType";
-        ddlTypes.DataValueField = "TypeID";
-        ddlTypes.DataBind();
-        con.Close();
-    }*/
-
     void GetInsurance(int UID)
     {
         con.Open();
@@ -77,15 +62,56 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
         {
             while (dr.Read())
             {
-                
                 hlkLicense.NavigateUrl = "~/Images/InsuranceDocs/License/" + dr["PicLicense"].ToString();
-                
                 hlkORCR.NavigateUrl = "~/Images/InsuranceDocs/ORCR/" + dr["PicORCR"].ToString();
-                
                 hlkAffidavit.NavigateUrl = "~/Images/InsuranceDocs/Affidavit/" + dr["PicAffidavit"].ToString();
                 hlkPhoto1.NavigateUrl = "~/Images/InsuranceDocs/Photos/" + dr["Photo1"].ToString();
                 hlkPhoto1.NavigateUrl = "~/Images/InsuranceDocs/Photos/" + dr["Photo2"].ToString();
                 hlkPhoto1.NavigateUrl = "~/Images/InsuranceDocs/Photos/" + dr["Photo3"].ToString();
+
+                if (dr["License"].ToString() == "Yes")
+                    cbLicense.Checked = true;
+                else
+                    cbLicense.Checked = false;
+                if (dr["PicLicense"].ToString() == "")
+                    hlkLicense.Visible = false;
+                else
+                    hlkLicense.Visible = true;
+                
+                if (dr["ORCR"].ToString() == "Yes")
+                    cbORCR.Checked = true;
+                else
+                    cbORCR.Checked = false;
+                if (dr["PicORCR"].ToString() == "")
+                    hlkORCR.Visible = false;
+                else
+                    hlkORCR.Visible = true;
+                
+                if (dr["Affidavit"].ToString() == "Yes")
+                    cbAffidavit.Checked = true;
+                else
+                    cbAffidavit.Checked = false;
+                if (dr["PicAffidavit"].ToString() == "")
+                    hlkAffidavit.Visible = false;
+                else
+                    hlkAffidavit.Visible = true;
+
+                if (dr["Photos"].ToString() == "Yes")
+                    cbPhotos.Checked = true;
+                else
+                    cbPhotos.Checked = false;
+                if (dr["Photo1"].ToString() == "")
+                    hlkPhoto1.Visible = false;
+                else
+                    hlkPhoto1.Visible = true;
+                if (dr["Photo2"].ToString() == "")
+                    hlkPhoto2.Visible = false;
+                else
+                    hlkPhoto2.Visible = true;
+                if (dr["Photo3"].ToString() == "")
+                    hlkPhoto3.Visible = false;
+                else
+                    hlkPhoto3.Visible = true;
             }
             con.Close();
         }
@@ -95,26 +121,53 @@ public partial class InsuranceDocs_Details : System.Web.UI.Page
            Response.Redirect("Default.aspx");
         }
     }
-    protected void cbORCR_CheckedChanged(object sender, EventArgs e)
+    protected void UpdateChecklist(object sender, EventArgs e)
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "Update InsuranceDocumentTbl Set ORCR = 'yes' WHERE UID=@UID";
+        cmd.CommandText = "Update InsuranceDocumentTbl Set License = @License, ORCR = @ORCR, Affidavit = @Affidavit, Photos = @Photos, Status=@Status " +
+            "WHERE UID=@UID";
+
+        if (cbLicense.Checked && cbORCR.Checked && cbAffidavit.Checked && cbPhotos.Checked)
+            cmd.Parameters.AddWithValue("@Status", "Complete");
+        else
+            cmd.Parameters.AddWithValue("@Status", "Incomplete");
+
+        if (cbLicense.Checked)
+        {
+            cmd.Parameters.AddWithValue("@License", "Yes");
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@License", "Yes");
+        }
+        if (cbORCR.Checked)
+        {
+            cmd.Parameters.AddWithValue("@ORCR", "Yes");
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@ORCR", "No");
+        }
+        if (cbAffidavit.Checked)
+        {
+            cmd.Parameters.AddWithValue(@"Affidavit", "Yes");
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Affidavit", "No");
+        }
+        if (cbPhotos.Checked)
+        {
+            cmd.Parameters.AddWithValue("@Photos", "Yes");
+        }
+        else
+        {
+            cmd.Parameters.AddWithValue("@Photos", "No");
+        }
         cmd.Parameters.AddWithValue("@UID", Request.QueryString["ID"].ToString());
         SqlDataReader dr = cmd.ExecuteReader();
         con.Close();
-    }
-    protected void cbInsurance_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void cbAffidavit_CheckedChanged(object sender, EventArgs e)
-    {
-
-    }
-    protected void cbPhotos_CheckedChanged(object sender, EventArgs e)
-    {
-
     }
 }

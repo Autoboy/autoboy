@@ -16,27 +16,28 @@ public partial class BookOnline_Default : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            GetPurchaseOrder();
+            GetBooking();
         }
     }
 
-    void GetPurchaseOrder()
+    void GetBooking()
     {
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT DISTINCT PurchaseOrderTbl.PONumber, PurchaseOrderTbl.Date, SupplierTbl.Supplier " +
-             "FROM PurchaseOrderTbl INNER JOIN " +
-             "SupplierTbl ON PurchaseOrderTbl.SupplierID = SupplierTbl.SupplierID INNER JOIN " +
-             "SpecificTbl ON PurchaseOrderTbl.SpecificID = SpecificTbl.SpecificID INNER JOIN " +
-             "ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID INNER JOIN " +
-             "PartTbl ON SpecificTbl.PartID = PartTbl.PartID";
+        cmd.CommandText = "SELECT BookingTbl.BookingID, BookingTbl.TransactionNumber, " +
+            "AccountTbl.FirstName + ' ' + AccountTbl.LastName AS FullName, " +
+            "CarTbl.PlateNo, ModelTbl.ModelName, CarTbl.Year, " + 
+            "BookingTbl.BookingDate, BookingTbl.Status " +
+            "FROM AccountTbl INNER JOIN " +
+            "CarTbl ON AccountTbl.UID = CarTbl.UID INNER JOIN " +
+            "ModelTbl ON CarTbl.ModelID = ModelTbl.ModelID INNER JOIN " +
+            "BookingTbl ON AccountTbl.UID = BookingTbl.UID";
         SqlDataAdapter da = new SqlDataAdapter(cmd);
         DataSet ds = new DataSet();
-        da.Fill(ds, "PurchaseOrderTbl");
-        lvCars.DataSource = ds;
-        lvCars.DataBind();
+        da.Fill(ds, "BookingTbl");
+        lvJO.DataSource = ds;
+        lvJO.DataBind();
         con.Close();
-    }
-    
+    }    
 }

@@ -1,0 +1,4 @@
+string message = "Hello! <br/><br>" +
+"This is the next line <a href=' '>link</a>";
+
+Helper.SendEmail("whotosend@yahoo.com", "Title", "Content/Message"

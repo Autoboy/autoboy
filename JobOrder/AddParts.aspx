@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-3">Service Type:</label>
-                <div class="col-lg-8">
+                <div class="col-lg-8">ddlServiceType_SelectedIndexChanged
                     <asp:DropDownList ID="ddlServiceType" runat="server" class="form-control" OnSelectedIndexChanged="ddlServiceType_SelectedIndexChanged" AutoPostBack="true" />
                 </div>
             </div>

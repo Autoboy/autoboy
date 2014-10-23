@@ -48,7 +48,7 @@
                                         <td>
                                             <asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("SpecificID") %>' Visible="false" />
                                             <%# Eval("PartName") %></td>
-                                        <td><asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" type="number"
+                                        <td><asp:TextBox ID="txtPrice" runat="server" class="form-control" type="number"
                                             min="1.00" max="1000000.00" step="0.01" Text='<%# Eval("EstPrice") %>' /></td>
                                         <td><%# Eval("EstTime") %></td></td>
                                         <td><asp:LinkButton ID="btnAddLink" runat="server" CommandName="addLink"><i class="fa fa-plus-circle"></i></asp:LinkButton></td>

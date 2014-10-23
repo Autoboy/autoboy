@@ -33,6 +33,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
     {
         txtTransactionNumber.Text = GetTransactionNumber().ToString();
         
+        
     }
     void GetCar()
     {
@@ -303,14 +304,15 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate) " +
-                            "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
+        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate,Status) " +
+                            "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate,@Status)";
         cmd.Parameters.AddWithValue("@TransactionNumber", txtTransactionNumber.Text);
         cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedValue);
         cmd.Parameters.AddWithValue("@UID", ddlCustomer.SelectedValue);
         cmd.Parameters.AddWithValue("@EstTime", EstTime);
         cmd.Parameters.AddWithValue("@EstCost", EstPrice);
         cmd.Parameters.AddWithValue("@OrderDate", date);
+        cmd.Parameters.AddWithValue("@Status", "Pending");
         cmd.ExecuteNonQuery();
         con.Close();
 

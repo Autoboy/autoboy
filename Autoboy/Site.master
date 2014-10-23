@@ -19,29 +19,7 @@
                 <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" id="navbar-main" style="height: 1px;">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" id="accounts" href="#">Accounts <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="~/Accounts" runat="server">View Accounts</a></li>
-                            <li><a href="~/Accounts/Add.aspx" runat="server">Add an Account</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav pull-right">
-                    <li id="user" runat="server" class="dropdown" visible="true">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <asp:Literal ID="ltUser" runat="server" Text="John Doe" /> <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="~/MyProfile.aspx" runat="server">View Profile</a></li>
-                            <li class="divider"></li>
-                            <li><a href="~/Logout.aspx" runat="server">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            
         </div>
     </div>
     <div class="container">
@@ -60,7 +38,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Made by <a href="#">Last Name, First Name</a></p>
+                    <p>Made by <a href="#">De La Salle - College of Saint Benilde</a></p>
                 </div>
             </div>
         </footer>

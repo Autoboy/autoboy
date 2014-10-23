@@ -26,6 +26,7 @@ public partial class JobOrder_Details : System.Web.UI.Page
                     GetTransactionNumber(id);
                     GetCustomer(id);
                     GetCarModel(id);
+                    GetJobOrderParts();
                 }
             }
             else
@@ -69,8 +70,9 @@ public partial class JobOrder_Details : System.Web.UI.Page
             {
                 txtCarModel.Text = dr["ModelName"].ToString() + " " + dr["Year"].ToString();
             }
+            con.Close();
         }
-        con.Close();
+        
 
     }
 
@@ -87,9 +89,11 @@ public partial class JobOrder_Details : System.Web.UI.Page
             while (da.Read())
             {
                 txtTransactionNumber.Text = da["TransactionNumber"].ToString();
+                
             }
+            con.Close();
         }
-        con.Close();
+        
         
     }
     
@@ -98,7 +102,7 @@ public partial class JobOrder_Details : System.Web.UI.Page
     //    txtTransactionNumber.Text = GetTransactionNumber(id);
     //}
 
-
+    
 
     void GetJobOrderParts()
     {
@@ -106,13 +110,13 @@ public partial class JobOrder_Details : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT ServiceTypeTbl.ServiceType, PartTbl.PartName, SpecificTbl.EstPrice, " +
+        cmd.CommandText = "SELECT TransactionTbl.TID, ServiceTypeTbl.ServiceType, PartTbl.PartName, SpecificTbl.EstPrice, " +
             "SpecificTbl.EstTime, TransactionTbl.FinalPrice FROM TransactionTbl INNER JOIN " + 
         "ServiceTbl ON TransactionTbl.ServiceID = ServiceTbl.ServiceID INNER JOIN " + 
         "SpecificTbl ON ServiceTbl.SpecificID = SpecificTbl.SpecificID INNER JOIN " +
         "PartTbl ON SpecificTbl.PartID = PartTbl.PartID INNER JOIN " + 
         "ServiceTypeTbl ON SpecificTbl.ServiceTypeID = ServiceTypeTbl.ServiceTypeID " + 
-        "WHERE (TransactionTbl.TransactionNumber = @TransactionNumber) ";
+        "WHERE TransactionTbl.TransactionNumber = @TransactionNumber";
         cmd.Parameters.AddWithValue("@TransactionNumber", txtTransactionNumber.Text);
         SqlDataReader da = cmd.ExecuteReader();
         lvJobOrderParts.DataSource = da;
@@ -121,6 +125,55 @@ public partial class JobOrder_Details : System.Web.UI.Page
     
     }
 
+    string GetPriorityNumber()
+    {
+        string PriorityNumber = "";
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT TOP 1 PriorityNo + 1 AS PriorityNumber FROM OrderTbl";
+        SqlDataReader dr = cmd.ExecuteReader();
+        if(dr.HasRows)
+        {
+            while(dr.Read())
+            {
+                PriorityNumber = dr["PriorityNumber"].ToString();
+            }
+            con.Close();
+        }
+        else
+        {
+            con.Close();
+            PriorityNumber = "1";
+        }
+        return PriorityNumber;
+    }
 
 
+
+    //protected void txtFinalPrice_TextChanged(object sender, EventArgs e)
+    //{
+    //    Literal ltTID = (Literal)e.Equals("ltTID");
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand();
+    //    cmd.Connection = con;
+    //    cmd.CommandText = "UPDATE TransactionTbl SET FinalPrice=@FinalPrice WHERE TID=@TID;";
+    //    cmd.Parameters.AddWithValue("@FinalPrice", txtFinalPrice.Text);
+    //    cmd.Parameters.AddWithValue("@TID", ltTID.);
+    //}
+
+    protected void btnFinalizeJO_Click(object sender, EventArgs e)
+    {
+        string prioritynumber = GetPriorityNumber();
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "UPDATE OrderTbl SET TimeStart=@TimeStart, Status=@Status, PriorityNo=@PriorityNo";
+        cmd.Parameters.AddWithValue("@TimeStart", txtDateStart.Text);
+        cmd.Parameters.AddWithValue("@Status", "Active");
+        cmd.Parameters.AddWithValue("@PriorityNo", prioritynumber);
+        cmd.ExecuteNonQuery();
+        con.Close();
+
+    }
 }

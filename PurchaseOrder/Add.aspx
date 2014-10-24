@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="Add.aspx.cs" Inherits="PurchaseOrder_Add"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Create Job Order
+    Create Purchase Order
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
@@ -11,7 +11,8 @@
             <div class="form-group">
                 <label class="control-label col-lg-3">Supplier:</label>
                 <div class="col-lg-8">
-                     <asp:DropDownList ID="ddlSupplier" runat="server" class="form-control" OnSelectedIndexChanged="ddlSupplier_SelectedIndexChanged" AutoPostBack="true" />
+                    <asp:TextBox ID="txtfoo" runat="server" class="form-control" Visible="false"/>
+                    <asp:DropDownList ID="ddlSupplier" runat="server" class="form-control" OnSelectedIndexChanged="ddlSupplier_SelectedIndexChanged" AutoPostBack="true" />
                 </div>
             </div>
             <h4>Select Parts to be Ordered:</h4>
@@ -30,7 +31,8 @@
                                             <asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("SpecificID") %>' Visible="false" />
                                             <%# Eval("PartName") %></td>
                                         <td><asp:TextBox ID="txtPrice" runat="server" CssClass="form-control" type="number"
-                                            min="1.00" max="1000000.00" step="0.01" Text='<%# Eval("EstPrice") %>' /></td>
+                                            min="1.00" max="1000000.00" step="0.01" Text='<%# Eval("EstPrice") %>' />
+                                        </td>
                                         <td><asp:LinkButton ID="btnAddLink" runat="server" CommandName="addLink"><i class="fa fa-plus-circle"></i></asp:LinkButton></td>
                                     </tr>
                                 </ItemTemplate>
@@ -61,18 +63,14 @@
                 <thead>
                     <th>Service Type</th>
                     <th>Part Name</th>    
-                    <th>Estimated Price</th>
-                    <th>Estimated Time</th>
                     <th></th>
                 </thead>
                 <tbody>
                     <asp:ListView ID="lvPOItems" runat="server" OnItemCommand="lvJobOrderParts_ItemCommand" >
                         <ItemTemplate>
                             <tr>
-                                <td><%# Eval("ServiceType") %><asp:Literal id="ltServiceID" runat="server" Text='<%# Eval("ServiceID") %>' Visible="false" /></td>
-                                <td><asp:Literal id="ltRefID" runat="server" Text='<%# Eval("TID") %>' Visible="false" /><%# Eval("PartName") %></td>
-                                <td><%# Eval("EstPrice", "{0: #,###.00}") %></td>
-                                <td><%# Eval("EstTime") %></td>
+                                <td><%# Eval("PartName") %><asp:Literal id="ltPOID" runat="server" Text='<%# Eval("POID") %>' Visible="false" /></td>
+                                <td><%# Eval("Price", "{0: #,###.00}") %></td>
                                 <td><asp:LinkButton ID="btnDelete" runat="server" CommandName="deleteitem"
                                     OnClientClick='return confirm("Delete spec?");'><i class="fa fa-trash-o"></i></asp:LinkButton></td>
                             </tr>

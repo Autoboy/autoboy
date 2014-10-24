@@ -17,11 +17,12 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
         if (!IsPostBack)
         {
             GetPOItems();
+            GetJobOrderTotal();
             GetCarParts();
             GetTranNo();
-            GetSupplier();
-            GetFoo();
-            
+            GetSupplier();         
+
+
         }
     }
     void GetTranNo()
@@ -102,6 +103,38 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
         con.Close();
     }
 
+    void GetJobOrderTotal()
+    {
+        //con.Open();
+        //SqlCommand cmd = new SqlCommand();
+        //cmd.Connection = con;
+        //cmd.CommandText = "SELECT SUM(SpecificTbl.EstPrice) AS TotalPrice, " +
+        //    "SUM(SpecificTbl.EstTime) AS TotalTime FROM TransactionTbl INNER JOIN " +
+        //"ServiceTbl ON TransactionTbl.ServiceID = ServiceTbl.ServiceID INNER JOIN " +
+        //"SpecificTbl ON ServiceTbl.SpecificID = SpecificTbl.SpecificID INNER JOIN " +
+        //"PartTbl ON SpecificTbl.PartID = PartTbl.PartID INNER JOIN " +
+        //"ServiceTypeTbl ON SpecificTbl.ServiceTypeID = ServiceTypeTbl.ServiceTypeID " + 
+        //"WHERE (TransactionTbl.TransactionNumber = 0) ";
+        //SqlDataReader da = cmd.ExecuteReader();
+        //if (da.HasRows)
+        //{
+        //    while (da.Read())
+        //    {
+        //        txtTotalEstimatedTime.Text = da["TotalTime"].ToString();
+        //        txtTotalEstimatedPrice.Text = da["TotalPrice"].ToString();
+        //    }
+        //    con.Close();
+        //}
+        //else
+        //{
+        //    con.Close();
+        //    txtTotalEstimatedTime.Text = "";
+        //    txtTotalEstimatedPrice.Text = "";
+
+        //}
+    }
+
+
 
     protected void lvCarParts_ItemCommand(object sender, ListViewCommandEventArgs e)
     {
@@ -113,22 +146,20 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
 
             if (!existing)
             {
-                TextBox txtfoo = (TextBox)e.Item.FindControl("txtPrice");
                 con.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = "INSERT INTO PurchaseOrderTbl (PONumber, SpecificID, Price, SupplierID, Status) " +
-                    "VALUES (@PONumber, @SpecificID, @Price, @SupplierID, @Status);";
-                cmd.Parameters.AddWithValue("@PONumber", 0);
-                cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
-                cmd.Parameters.AddWithValue("@Price", txtfoo.Text);
-                cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
-                cmd.Parameters.AddWithValue("@Status", "Pending");
+                cmd.CommandText = "insert into servicetbl values (@specificid, @paintid, @description); " +
+                    "select top 1 serviceid from servicetbl order by serviceid desc;";
+                //cmd.parameters.addwithvalue("@specificid", ltspecificid.text);
+                //cmd.parameters.addwithvalue("@paintid", dbnull.value);
+                //cmd.parameters.addwithvalue("@description", ddlservicetype.selectedvalue);
+                //int serviceid = (int)cmd.executescalar();
+                //cmd.commandtext = "insert into transactiontbl values (@transactionnumber, @serviceid)";
+                //cmd.parameters.addwithvalue("@transactionnumber", 0);
+                //cmd.parameters.addwithvalue("@serviceid", serviceid);
                 cmd.ExecuteNonQuery();
                 con.Close();
-
-                ddlSupplier.Enabled = false;
-                
             }
             else
             {
@@ -141,16 +172,20 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
     {
         if (e.CommandName == "deleteitem")
         {
-            Literal ltPOID = (Literal)e.Item.FindControl("ltPOID");
+            Literal ltRefID = (Literal)e.Item.FindControl("ltRefID");
+            Literal ltServiceID = (Literal)e.Item.FindControl("ltServiceID");
             con.Open();
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
-            cmd.CommandText = "DELETE FROM PurchaseOrderTbl where POID = @POID; ";
-            cmd.Parameters.AddWithValue("@POID", ltPOID.Text);
+            cmd.CommandText = "delete from TransactionTbl where TID = @TID; " +
+                "DELETE FROM ServiceTbl WHERE ServiceID=@ServiceID; ";
+            cmd.Parameters.AddWithValue("@TID", ltRefID.Text);
+            cmd.Parameters.AddWithValue("@ServiceID", ltServiceID.Text);
             cmd.ExecuteNonQuery();
             con.Close();
         }
-        GetPOItems();
+        //GetJobOrderParts();
+        GetJobOrderTotal();
     }
 
     bool IsExisting(String SpecificID)
@@ -177,75 +212,62 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
         return existing;
     }
 
-    string GetPONUmber()
+    int GetPONumber()
     {
-        string PONumber = "";
-        string foo = "";
+        int number = 0;
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT TOP 1 LEFT(PONumber,8) AS Number FROM PurchaseOrderTbl ORDER BY POID DESC";
+        cmd.CommandText = "SELECT PONumber + 1 AS Number FROM PurchaseOrderTbl " +
+                            "WHERE PONumber = 0";
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
         {
             while (data.Read())
             {
-                foo = data["Number"].ToString();
+                number = int.Parse(data["Number"].ToString());
+                number = int.Parse(DateTime.Now.ToString("yyMMdd") + "01");
             }
             con.Close();
         }
         else
         {
             con.Close();
-            foo = "0";
+            number = int.Parse(DateTime.Now.ToString("yyMMdd") + "01");
         }
-        if (foo == DateTime.Now.ToString("yyyyMMdd"))
-        {
-
-            con.Open();
-            SqlCommand command = new SqlCommand();
-            command.Connection = con;
-            command.CommandText = "SELECT TOP 1 PONumber + 1 AS PONumber FROM PurchaseOrderTbl " +
-                                  "ORDER BY PONumber DESC";
-            SqlDataReader dt = command.ExecuteReader();
-            if (dt.HasRows)
-            {
-                while (dt.Read())
-                {
-                    PONumber = dt["PONumber"].ToString();
-
-                }
-                con.Close();
-            }
-
-        }
-        else
-        {
-            PONumber = DateTime.Now.ToString("yyyyMMdd") + "01";
-
-        }
-        return PONumber;
+        return number;
     }
 
     protected void btnCreatePO_Click(object sender, EventArgs e)
     {
-        String PONum = GetPONUmber();
-        con.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandText = "UPDATE PurchaseOrderTbl SET PONumber = @PONumber, DATE = @Date WHERE PONumber = 0";
-        cmd.Parameters.AddWithValue("@PONumber", txtfoo.Text);
-        cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+        //int EstTime = int.Parse(txtTotalEstimatedTime.Text);
+        //decimal EstPrice = Decimal.Parse(txtTotalEstimatedPrice.Text);
+        //DateTime date = DateTime.Now;
+        //int TransactionNumber = GetTransactionNumber();
+        //con.Open();
+        //SqlCommand cmd = new SqlCommand();
+        //cmd.Connection = con;
+        //cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate) " +
+        //                    "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
+        //cmd.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
+        //cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedValue);
+        //cmd.Parameters.AddWithValue("@UID", ddlCustomer.SelectedValue);
+        //cmd.Parameters.AddWithValue("@EstTime", EstTime);
+        //cmd.Parameters.AddWithValue("@EstCost", EstPrice);
+        //cmd.Parameters.AddWithValue("@OrderDate", date);
+        //cmd.ExecuteNonQuery();
+        //con.Close();
 
-        cmd.ExecuteNonQuery();
-        con.Close();
+        //con.Open();
+        //    SqlCommand com = new SqlCommand();
+        //com.Connection = con;
+        //com.CommandText = "UPDATE TransactionTbl SET TransactionNumber = @TransactionNumber WHERE TransactionNumber = 0";
+        //com.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
+        //com.ExecuteNonQuery();
+        //con.Close();
 
         //Response.Redirect("Default.aspx");
 
-        ddlSupplier.Enabled = true;
-        GetPOItems();
-        GetCarParts();
-        GetFoo();
 
     }
 
@@ -253,11 +275,4 @@ public partial class PurchaseOrder_Add : System.Web.UI.Page
     {
         GetCarParts();
     }
-
-    void GetFoo()
-    {
-        string asda = GetPONUmber();
-        txtfoo.Text = asda;
-    }
-
 }

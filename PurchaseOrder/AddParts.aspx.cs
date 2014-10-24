@@ -31,8 +31,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
     }
     void GetTranNo()
     {
-        txtTransactionNumber.Text = GetTransactionNumber().ToString();
-        
+        TextBox1.Text = GetTransactionNumber().ToString();
         
     }
     void GetCar()
@@ -99,7 +98,8 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         cmd.CommandText = "SELECT SpecificTbl.SpecificID, PartTbl.PartName, SpecificTbl.EstPrice, SpecificTbl.EstTime, SpecificTbl.ServiceTypeID " +
                          "FROM SupplierPartsTbl INNER JOIN " +
                          "SpecificTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID INNER JOIN " +
-                         "PartTbl ON SpecificTbl.PartID = PartTbl.PartID WHERE SpecificTbl.ServiceTypeID = @ServiceTypeID";
+                         "PartTbl ON SpecificTbl.PartID = PartTbl.PartID ";
+                         //"WHERE ServiceTypeID = @ServiceTypeID";
         cmd.Parameters.AddWithValue("@ServiceTypeID", ddlServiceType.SelectedValue);
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
@@ -176,13 +176,13 @@ public partial class SupplierParts_Add : System.Web.UI.Page
                 con.Open();
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
-                cmd.CommandText = "INSERT INTO ServiceTbl (SpecificID,PaintID,Description) VALUES (@SpecificID, @PaintID, @Description); " +
-                    "SELECT TOP 1 ServiceID FROM ServiceTbl ORDER BY- ServiceID DESC;";
+                cmd.CommandText = "INSERT INTO ServiceTbl VALUES (@SpecificID, @PaintID, @Description); " +
+                    "SELECT TOP 1 ServiceID FROM ServiceTbl ORDER BY ServiceID DESC;";
                 cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
                 cmd.Parameters.AddWithValue("@PaintID", DBNull.Value);
                 cmd.Parameters.AddWithValue("@Description", ddlServiceType.SelectedValue);
                 int serviceID = (int)cmd.ExecuteScalar();
-                cmd.CommandText = "INSERT INTO TransactionTbl (TransactionNumber,ServiceID) VALUES (@TransactionNumber, @ServiceID)";
+                cmd.CommandText = "INSERT INTO TransactionTbl VALUES (@TransactionNumber, @ServiceID)";
                 cmd.Parameters.AddWithValue("@TransactionNumber", 0);
                 cmd.Parameters.AddWithValue("@ServiceID", serviceID);
                 cmd.ExecuteNonQuery();
@@ -238,54 +238,30 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         return existing;
     }
 
-    string GetTransactionNumber()
+    int GetTransactionNumber()
     {
-        string TransactionNumber = "";
-        string date = "";
+        int number = 0;
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT TOP 1 LEFT(TransactionNumber,8) AS Number FROM TransactionTbl ORDER BY TID DESC";     
+        cmd.CommandText = "SELECT TransactionNumber + 1 AS Number FROM TransactionTbl " +
+                            "WHERE TransactionNumber = 0";
         SqlDataReader data = cmd.ExecuteReader();
         if (data.HasRows)
         {
             while (data.Read())
             {
-                date = data["Number"].ToString();
+                number = int.Parse(data["Number"].ToString());
+                number = int.Parse(DateTime.Now.ToString("yyyMMdd") + "01");
             }
             con.Close();
         }
         else
         {
             con.Close();
-            date = "0";
+            number = int.Parse(DateTime.Now.ToString("yyyMMdd") + "01");
         }
-        if (date == DateTime.Now.ToString("yyyyMMdd"))
-        {
-            
-            con.Open();
-            SqlCommand command = new SqlCommand();
-            command.Connection = con;
-            command.CommandText = "SELECT TOP 1 TransactionNumber + 1 AS TransactionNumber FROM TransactionTbl " +
-                                  "ORDER BY TransactionNumber DESC";
-            SqlDataReader dt = command.ExecuteReader();
-            if (dt.HasRows)
-            {
-                while(dt.Read())
-                {
-                    TransactionNumber = dt["TransactionNumber"].ToString();
-                    
-                }
-                con.Close();
-            }
-            
-        }
-        else
-        {
-            TransactionNumber = DateTime.Now.ToString("yyyyMMdd") + "01";
-
-        }
-        return TransactionNumber;
+        return number;
     }
 
     protected void btnCreateJO_Click(object sender, EventArgs e)
@@ -293,37 +269,31 @@ public partial class SupplierParts_Add : System.Web.UI.Page
         int EstTime = int.Parse(txtTotalEstimatedTime.Text);
         decimal EstPrice = Decimal.Parse(txtTotalEstimatedPrice.Text);
         DateTime date = DateTime.Now;
-        string TransactionNumber = GetTransactionNumber();
-        con.Open();
-        SqlCommand com = new SqlCommand();
-        com.Connection = con;
-        com.CommandText = "UPDATE TransactionTbl SET TransactionNumber = @TransactionNumber WHERE TransactionNumber = 0";
-        com.Parameters.AddWithValue("@TransactionNumber", txtTransactionNumber.Text);
-        com.ExecuteNonQuery();
-        con.Close();
+        int TransactionNumber = GetTransactionNumber();
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate,Status) " +
-                            "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate,@Status)";
-        cmd.Parameters.AddWithValue("@TransactionNumber", txtTransactionNumber.Text);
+        cmd.CommandText = "INSERT INTO OrderTbl (TransactionNumber,ChassisNo,UID,EstTime,EstCost,OrderDate) " +
+                            "VALUES (@TransactionNumber,@ChassisNo,@UID,@EstTime,@EstCost,@OrderDate)";
+        cmd.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
         cmd.Parameters.AddWithValue("@ChassisNo", ddlChassisNo.SelectedValue);
         cmd.Parameters.AddWithValue("@UID", ddlCustomer.SelectedValue);
         cmd.Parameters.AddWithValue("@EstTime", EstTime);
         cmd.Parameters.AddWithValue("@EstCost", EstPrice);
         cmd.Parameters.AddWithValue("@OrderDate", date);
-        cmd.Parameters.AddWithValue("@Status", "Pending");
         cmd.ExecuteNonQuery();
         con.Close();
 
-        
+        con.Open();
+            SqlCommand com = new SqlCommand();
+        com.Connection = con;
+        com.CommandText = "UPDATE TransactionTbl SET TransactionNumber = @TransactionNumber WHERE TransactionNumber = 0";
+        com.Parameters.AddWithValue("@TransactionNumber", TransactionNumber);
+        com.ExecuteNonQuery();
+        con.Close();
 
         Response.Redirect("Default.aspx");
 
 
-    }
-    protected void ddlServiceType_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        GetCarParts();
     }
 }

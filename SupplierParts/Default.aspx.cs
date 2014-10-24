@@ -39,7 +39,24 @@ public partial class SupplierParts_Default : System.Web.UI.Page
         if (!IsPostBack)
         {
             GetSpecific();
+            GetSupplier();
         }
+    }
+
+    void GetSupplier()
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SupplierID, Supplier FROM SupplierTbl";
+        SqlDataReader dr = cmd.ExecuteReader();
+        ddlSupplier.DataSource = dr;
+        ddlSupplier.DataTextField = "Supplier";
+        ddlSupplier.DataValueField = "SupplierID";
+        ddlSupplier.DataBind();
+        con.Close();
+
+
     }
 
     void GetSpecific()
@@ -47,18 +64,37 @@ public partial class SupplierParts_Default : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "SELECT SpecificTbl.SpecificID, PartTbl.PartName, ModelTbl.ModelName, SpecificTbl.[Year], " +
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID, SpecificTbl.SpecificID, PartTbl.PartName, ModelTbl.ModelName, SpecificTbl.[Year], " +
         "SpecificTbl.EstPrice, SpecificTbl.EstTime FROM SpecificTbl " +
         "INNER JOIN PartTbl ON SpecificTbl.PartID = PartTbl.PartID " +
-        "INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID";
-        SqlDataAdapter da = new SqlDataAdapter(cmd);
-        DataSet ds = new DataSet();
-        da.Fill(ds, "SpecificTbl");
-        lvSpecific.DataSource = ds;
-        lvSpecific.DataBind();
+        "INNER JOIN ModelTbl ON SpecificTbl.ModelID = ModelTbl.ModelID " +
+        "INNER JOIN SupplierPartsTbl ON SupplierPartsTbl.SpecificID = SpecificTbl.SpecificID " +
+        "WHERE SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+        SqlDataReader dr = cmd.ExecuteReader();
+        lvSupplierParts.DataSource = dr;
+        lvSupplierParts.DataBind();
         con.Close();
     }
 
+
+    void GetParts(string keyword)
+    {
+        con.Open();
+        SqlCommand cmd = new SqlCommand();
+        cmd.Connection = con;
+        cmd.CommandText = "SELECT SupplierPartsTbl.RefID, SpecificTbl.[Year] " +
+        "FROM SpecificTbl " +
+        "INNER JOIN SupplierPartsTbl ON SpecificTbl.SpecificID = SupplierPartTbl.SpecificID " + 
+        "WHERE ModelTbl.ModelName LIKE '%" + keyword + "%' OR " + 
+        "AND SupplierPartsTbl.SupplierID = @SupplierID";
+        cmd.Parameters.AddWithValue("@SupplierID", ddlSupplier.SelectedValue);
+        SqlDataReader dr = cmd.ExecuteReader();
+        lvSupplierParts.DataSource = dr;
+        lvSupplierParts.DataBind();
+        con.Close();
+        
+    }
     //void GetAccounts(string keyword)
     //{
     //    con.Open();
@@ -130,4 +166,15 @@ public partial class SupplierParts_Default : System.Web.UI.Page
     //{
     //    GetAccountsByStatus();
     //}
+    protected void ddlSupplier_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GetSpecific();
+    }
+    protected void txtSearchCar_TextChanged(object sender, EventArgs e)
+    {
+        if (txtSearchCar.Text.Trim() == "")
+            GetSpecific();
+        else
+            GetParts(txtSearchCar.Text);
+    }
 }

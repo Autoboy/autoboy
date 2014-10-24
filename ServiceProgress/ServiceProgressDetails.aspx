@@ -1,17 +1,23 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="JobOrderDetails.aspx.cs" Inherits="JobOrder_Details" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
-    Viewing Job Order
+   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="content" Runat="Server">
     <form runat="server" class="form-horizontal">
-        
+        <h2>Job Order Progress</h2>
         
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="control-label col-lg-3">Customer Email:</label>
                 <div class="col-lg-8">
                     <asp:DropDownList ID="ddlCustomer" runat="server" class="form-control" ReadOnly="true"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-3">Date Start:</label>
+                <div class="col-lg-8">
+                    <asp:TextBox ID="txtDateStart" runat="server" class="form-control" type="date" />
                 </div>
             </div>
             
@@ -28,7 +34,7 @@
                     
                 </thead>
                 <tbody>
-                    <asp:ListView ID="lvJobOrderParts" runat="server" OnItemCommand="lvJobOrderParts_ItemCommand">
+                    <asp:ListView ID="lvJobOrderParts" runat="server" >
                         <ItemTemplate>
                             <tr>
                                 <td><%# Eval("ServiceType") %></td>
@@ -38,9 +44,6 @@
                                 <td><asp:Literal ID="ltTID" runat="server" Text='<%# Eval("TID") %>' Visible="false" />
                                     <asp:TextBox ID="txtFinalPrice" runat="server" class="form-control" type="number"
                                             min="1.00" max="1000000.00" step="0.01" Text='<%# Eval("FinalPrice") %>'/>
-                                </td>
-                                <td>
-                                    <asp:LinkButton ID="btnUpdatePrice" runat="server" CommandName="updatePrice"><i class="fa fa-exchange"></i></asp:LinkButton>
                                 </td>
                             </tr>
                         </ItemTemplate>
@@ -73,12 +76,7 @@
                     <asp:TextBox ID="txtCarModel" runat="server" class="form-control" ReadOnly="true"/>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-lg-3">Date Start:</label>
-                <div class="col-lg-8">
-                    <asp:TextBox ID="txtDateStart" runat="server" class="form-control" type="date" />
-                </div>
-            </div>
+            
             <div id="error" runat="server" class="alert alert-danger" visible="false">
                 Part is already existing.
             </div>
@@ -105,7 +103,7 @@
             </div>
             <div class="col-lg-10">
                 <span class="pull-right">
-                    <asp:Button ID="btnFinalizeJO" runat="server" class="btn btn-success" Text="Finalize Job Order" OnClick="btnFinalizeJO_Click"/>
+                    <asp:Button ID="btnFinalizeJO" runat="server" class="btn btn-success" Text="Finalize Job Order" />
                     <asp:Button ID="btnCancelJO" runat="server" class="btn btn-default" Text="Cancel" />
                 </span>
              </div>

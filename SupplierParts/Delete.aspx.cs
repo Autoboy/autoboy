@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Data.SqlClient;
 
-public partial class Accounts_Delete : System.Web.UI.Page
+public partial class SupplierParts_Delete : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -34,8 +34,8 @@ public partial class Accounts_Delete : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "DELETE FROM AccountTbl WHERE UID=@UID";
-        cmd.Parameters.AddWithValue("@UID", ID);
+        cmd.CommandText = "DELETE FROM SupplierPartsTbl WHERE RefID=@RefID";
+        cmd.Parameters.AddWithValue("@RefID", ID);
         cmd.ExecuteNonQuery();
         con.Close();
         Session["delete"] = "yes";

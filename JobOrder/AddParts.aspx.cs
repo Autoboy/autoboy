@@ -177,7 +177,7 @@ public partial class SupplierParts_Add : System.Web.UI.Page
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = con;
                 cmd.CommandText = "INSERT INTO ServiceTbl (SpecificID,PaintID,Description) VALUES (@SpecificID, @PaintID, @Description); " +
-                    "SELECT TOP 1 ServiceID FROM ServiceTbl ORDER BY ServiceID DESC;";
+                    "SELECT TOP 1 ServiceID FROM ServiceTbl ORDER BY- ServiceID DESC;";
                 cmd.Parameters.AddWithValue("@SpecificID", ltSpecificID.Text);
                 cmd.Parameters.AddWithValue("@PaintID", DBNull.Value);
                 cmd.Parameters.AddWithValue("@Description", ddlServiceType.SelectedValue);

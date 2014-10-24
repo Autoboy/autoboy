@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"  CodeFile="Default.aspx.cs" Inherits="SupplierParts_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="title" Runat="Server">
     View Supplier and Parts
@@ -18,38 +18,35 @@
             <div class="col-lg-4">
                 <div class="input-group">
                     <span class="input-group-addon">Select Supplier: </span>
-                    <asp:DropDownList ID="ddlSupplier" runat="server" class="form-control" />        
+                    <asp:DropDownList ID="ddlSupplier" runat="server" class="form-control" OnSelectedIndexChanged="ddlSupplier_SelectedIndexChanged" AutoPostBack="true" />        
                 </div>
             </div>
             <div id="keyword" runat="server" class="col-lg-4" visible="true">
                 <div class="input-group">
-                    <asp:TextBox ID="txtSearchCar" runat="server" class="form-control" placeholder="Search Car..."/>
+                    <asp:TextBox ID="txtSearchCar" runat="server" class="form-control" placeholder="Search Part..." OnTextChanged="txtSearchCar_TextChanged" AutoPostBack="true" />
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 </div>
             </div>
             <br /><br />
             <table class="table table-hover">
                 <thead>
-                    <th>Model Name</th>
+                    <th>Model Name and Year</th>
                     <th>Part Name</th>
-                    <th>Year</th>
                     <th>Estimated Price</th>
                     <th>Estimated Time</th>
                     <th></th>
                 </thead>
                 <tbody>
-                    <asp:ListView ID="lvSpecific" runat="server">
+                    <asp:ListView ID="lvSupplierParts" runat="server">
                         <ItemTemplate>
                             <tr>
-                                <td><%# Eval("SpecificID") %></td>
+                                <td><asp:Literal id="ltSpecificID" runat="server" Text='<%# Eval("RefID") %>' Visible="false" /><%# Eval("ModelName") %> <%# Eval("Year") %></td>
                                 <td><%# Eval("PartName") %></td>
-                                <td><%# Eval("ModelName") %></td>
-                                <td><%# Eval("Year") %></td>
                                 <td><%# Eval("EstPrice") %> </td>
                                 <td><%# Eval("EstTime") %></td>
                                 <td>
-                                    <a href='Details.aspx?ID=<%# Eval("SpecificID") %>'><i class="fa fa-search"></i></a>&nbsp;
-                                    <a href='Delete.aspx?ID=<%# Eval("SpecificID") %>' onclick='return confirm("Delete record?")'>
+                                    <a href='Details.aspx?ID=<%# Eval("RefID") %>'><i class="fa fa-search"></i></a>&nbsp;
+                                    <a href='Delete.aspx?ID=<%# Eval("RefID") %>' onclick='return confirm("Delete record?")'>
                                         <i class="fa fa-trash-o"></i>
                                     </a>
                                 </td>

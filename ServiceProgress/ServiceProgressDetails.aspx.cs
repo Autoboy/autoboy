@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using System.Data;
 using System.Data.SqlClient;
 
-public partial class JobOrder_Details : System.Web.UI.Page
+public partial class ServiceProgress_Details : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(Helper.GetCon());
 
@@ -151,7 +151,16 @@ public partial class JobOrder_Details : System.Web.UI.Page
 
 
 
-   
+    //protected void txtFinalPrice_TextChanged(object sender, EventArgs e)
+    //{
+    //    Literal ltTID = (Literal)e.Equals("ltTID");
+    //    con.Open();
+    //    SqlCommand cmd = new SqlCommand();
+    //    cmd.Connection = con;
+    //    cmd.CommandText = "UPDATE TransactionTbl SET FinalPrice=@FinalPrice WHERE TID=@TID;";
+    //    cmd.Parameters.AddWithValue("@FinalPrice", txtFinalPrice.Text);
+    //    cmd.Parameters.AddWithValue("@TID", ltTID.);
+    //}
 
     protected void btnFinalizeJO_Click(object sender, EventArgs e)
     {
@@ -159,31 +168,12 @@ public partial class JobOrder_Details : System.Web.UI.Page
         con.Open();
         SqlCommand cmd = new SqlCommand();
         cmd.Connection = con;
-        cmd.CommandText = "UPDATE OrderTbl SET TimeStart=@TimeStart, Status=@Status, PriorityNo=@PriorityNo,";
+        cmd.CommandText = "UPDATE OrderTbl SET TimeStart=@TimeStart, Status=@Status, PriorityNo=@PriorityNo";
         cmd.Parameters.AddWithValue("@TimeStart", txtDateStart.Text);
         cmd.Parameters.AddWithValue("@Status", "Active");
         cmd.Parameters.AddWithValue("@PriorityNo", prioritynumber);
         cmd.ExecuteNonQuery();
         con.Close();
 
-    }
-    protected void lvJobOrderParts_ItemCommand(object sender, ListViewCommandEventArgs e)
-    {
-        if (e.CommandName == "updatePrice")
-        {
-            Literal ltTID = (Literal)e.Item.FindControl("ltTID");
-            TextBox FinalPrice = (TextBox)e.Item.FindControl("txtFinalPrice");
-
-            bool existing = IsExisting(ltSpecificID.Text);
-
-            if (!existing)
-            {
-                con.Open
-            }
-            else
-            {
-
-            }
-        }
     }
 }
